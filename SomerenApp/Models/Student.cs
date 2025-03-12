@@ -2,13 +2,13 @@
 {
     public class Student
     {
-        int Studentnummer {  get; set; }
-        string Voornaam { get; set; }
-        string Achternaam { get; set; }
-        string Klas {  get; set; }
-        int Telefoonnummer { get; set; }
-        int Kamernummer { get; set; }
-        public Student(int studentnummer, string voornaam, string achternaam, string klas, int telefoonnummer, int kamernummer)
+        public int Studentnummer {  get; set; }
+        public string Voornaam { get; set; }
+        public string Achternaam { get; set; }
+        public string Klas {  get; set; }
+        public string Telefoonnummer { get; set; }
+        public int Kamernummer { get; set; }
+        public Student(int studentnummer, string voornaam, string achternaam, string klas, string telefoonnummer, int kamernummer)
         {
             Studentnummer = studentnummer;
             Voornaam = voornaam;
