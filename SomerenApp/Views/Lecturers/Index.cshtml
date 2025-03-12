@@ -1,29 +1,33 @@
-﻿@model List<SomerenApp.Models.Docent>
+﻿@model List<SomerenApp.Models.Lecturer>
 @{
-	ViewData["Title"] = "Docent";
+	ViewData["Title"] = "Lecturer";
 }
 <div class="text-center">
-	<h1 class="display-4">Docenten</h1>
-	<p>Aantal docenten in de lijst: @Model.Count</p>
+	<h1 class="display-4">Lecturers</h1>
+	<p>Amount of lecturers: @Model.Count</p>
 </div>
 <table class="table">
 	<thead>
 		<tr>
-			<th>Achternaam</th>
-			<th>Voornaam</th>
-			<th>Leeftijd</th>
-			<th>Telefoonnummer</th>
+			<th>Last name</th>
+			<th>First name</th>
+			<th>Age</th>
+			<th>Phone number</th>
 		</tr>
 	</thead>
 	<tbody>
 		@{
-			foreach (Docent docent in Model)
+			foreach (Lecturer lecturer in Model)
 			{
 				<tr>
-					<td>@docent.Achternaam</td>
-					<td>@docent.Voornaam</td>
-					<td>@docent.Leeftijd</td>
-					<td>@docent.Telefoonnummer</td>
+					<td>@lecturer.LastName</td>
+					<td>@lecturer.FirstName</td>
+					<td>@lecturer.Age</td>
+					<td>@lecturer.PhoneNumber</td>
+					<td>
+						<a href="/Lecturers/Edit/@lecturer.LecturerNumber">Edit</a>
+						<a href="/Lecturers/Delete/@lecturer.LecturerNumber">Delete</a>
+					</td>
 				</tr>
 			}
 		}
