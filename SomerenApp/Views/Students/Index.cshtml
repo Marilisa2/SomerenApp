@@ -1,5 +1,40 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<SomerenApp.Models.Student>
 @{
+	ViewData["Title"] = "Students";
 }
+
+<div class="text-center">
+	<h1 class="display-4 p-3">Students</h1>
+	<a class="create" href="/Students/Create">Create New Student</a>
+</div>
+
+<table class="table table-striped mt-3">
+	<thead>
+		<tr class="table table-dark">
+			<th>Student number</th>
+			<th>First name</th>
+			<th>Last name</th>
+			<th>Telephone number</th>
+			<th>Class</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		@{
+			foreach (var student in Model)
+			{
+				<tr>
+					<td>@student.StudentNumber</td>
+					<td>@student.FirstName</td>
+					<td>@student.LastName</td>				
+					<td>@student.TelephoneNumber</td>
+					<td>@student.Class</td>
+					<td>
+						<a href="/Students/Edit/@student.StudentNumber">Edit</a> |
+						<a href="/Students/Delete/@student.StudentNumber">Delete</a>
+					</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>
