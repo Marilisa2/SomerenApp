@@ -3,10 +3,10 @@ using SomerenApp.Models;
 
 namespace SomerenApp.Repositories
 {
-    public class SomerenDB : ILecturersRepository
+    public class DbLecturersRepository : ILecturersRepository
     {
         private readonly string? _connectionString;
-        public SomerenDB(IConfiguration configuration)
+        public DbLecturersRepository(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("SomerenDatabase");
         }
