@@ -1,5 +1,38 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
+@model SomerenApp.Models.Student
 @{
+	ViewData["Title"] = "Create Student";
 }
+
+<h4>New Student</h4>
+<form action="/Students/Create" method="POST">
+	<div class="form-group py-2">
+		<label for="StudentNumber">Student number:</label>
+		<input type="text" id="StudentNumber" name="StudentNumber" class="form-control" required value="@Model?.StudentNumber" />
+	</div>
+
+	<div class="form-group py-2">
+		<label for="FirstName">First name:</label>
+		<input type="text" id="FirstName" name="FirstName" class="form-control" required value="@Model?.FirstName" />
+	</div>
+
+	<div class="form-group py-2">
+		<label for="LastName">Last name:</label>
+		<input type="text" id="LastName" name="LastName" class="form-control" required value="@Model?.LastName" />
+	</div>
+	
+	<div class="form-group py-2">
+		<label for="TelephoneNumber">Telephone number:</label>
+		<input type="text" id="TelephoneNumber" name="TelephoneNumber" class="form-control" required value="@Model?.TelephoneNumber" />
+	</div>
+	
+	<div class="form-group py-2">
+		<label for="Class">Class:</label>
+		<input type="text" id="Class" name="Class" class="form-control" required value="@Model?.Class" />
+	</div>
+
+	<button type="submit" class="btn btn-primary my-2">Add</button>
+</form>
+
+<a href="/Students/Index">Back to list</a>
+

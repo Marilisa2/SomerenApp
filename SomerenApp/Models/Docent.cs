@@ -2,14 +2,14 @@
 {
     public class Docent
     {
-        int Docentnummer { get; set; }
-        string Voornaam { get; set; }
-        string Achternaam { get; set; }
-        int Leeftijd { get; set; }
-        int Telefoonnummer { get; set; }
-        int Kamernummer { get; set; }
+        public int Docentnummer { get; set; }
+        public string Voornaam { get; set; }
+        public string Achternaam { get; set; }
+        public int Leeftijd { get; set; }
+        public string Telefoonnummer { get; set; }
+        public int Kamernummer { get; set; }
 
-        public Docent(int docentnummer, string voornaam, string achternaam, int leeftijd, int telefoonnummer, int kamernummer)
+        public Docent(int docentnummer, string voornaam, string achternaam, int leeftijd, string telefoonnummer, int kamernummer)
         {
             Docentnummer = docentnummer;
             Voornaam = voornaam;
@@ -17,6 +17,14 @@
             Leeftijd = leeftijd;
             Telefoonnummer = telefoonnummer;
             Kamernummer = kamernummer;
+        }
+
+        public Docent(string voornaam, string achternaam, int leeftijd, string telefoonnummer)
+        {
+            Achternaam = achternaam;
+            Voornaam = voornaam;
+            Leeftijd = leeftijd;
+            Telefoonnummer = telefoonnummer;
         }
 
         public Docent()

@@ -1,5 +1,31 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<SomerenApp.Models.Docent>
 @{
+	ViewData["Title"] = "Docent";
 }
+<div class="text-center">
+	<h1 class="display-4">Docenten</h1>
+	<p>Aantal docenten in de lijst: @Model.Count</p>
+</div>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Achternaam</th>
+			<th>Voornaam</th>
+			<th>Leeftijd</th>
+			<th>Telefoonnummer</th>
+		</tr>
+	</thead>
+	<tbody>
+		@{
+			foreach (Docent docent in Model)
+			{
+				<tr>
+					<td>@docent.Achternaam</td>
+					<td>@docent.Voornaam</td>
+					<td>@docent.Leeftijd</td>
+					<td>@docent.Telefoonnummer</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>
