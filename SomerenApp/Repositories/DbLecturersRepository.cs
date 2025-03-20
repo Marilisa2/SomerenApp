@@ -56,14 +56,15 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"INSERT INTO users (firstName, lastName, age, phoneNumber){Environment.NewLine}" +
-                    "VALUES(@FirstName, @LastName, @Age, @PhoneNumber); " +
+                string query = $"INSERT INTO users (firstName, lastName, age, phoneNumber, roomId){Environment.NewLine}" +
+                    "VALUES(@FirstName, @LastName, @Age, @PhoneNumber, @RoomId); " +
                     "SELECT SCOPE_IDENTITY();";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@FirstName", lecturer.FirstName);
                 command.Parameters.AddWithValue("@LastName", lecturer.LastName);
                 command.Parameters.AddWithValue("@Age", lecturer.Age);
                 command.Parameters.AddWithValue("@PhoneNumber", lecturer.PhoneNumber);
+                command.Parameters.AddWithValue("@RoomId", lecturer.RoomId);
                 command.Connection.Open();
                 lecturer.LecturerNumber = Convert.ToInt32(command.ExecuteScalar());
             }
@@ -85,13 +86,13 @@ namespace SomerenApp.Repositories
             }
         }
 
-        public void DeleteLecturer(int lecturerNumber)
+        public void DeleteLecturer(Lecturer lecturer)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = $"DELETE FROM users WHERE lecturerNumber = @lecturerNumber";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@lecturerNumber", lecturerNumber);
+                command.Parameters.AddWithValue("@lecturerNumber", lecturer.LecturerNumber);
                 command.Connection.Open();
             }
         }
