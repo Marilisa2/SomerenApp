@@ -1,1 +1,49 @@
-﻿
+﻿@model List<SomerenApp.Models.Room>
+
+@{
+    ViewData["Title"] = "Rooms";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Rooms</h1>
+    <a href="/Rooms/Create">Create New</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Roomnumber</th>
+                <th>Roomsize</th>
+                <th>Roomtype</th>
+                <th>Building</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                foreach (var room in Model)
+                {
+                    <tr>
+                        <td>@room.RoomId</td>
+                        <td>@room.RoomNumber</td>
+                        <td>@room.RoomSize</td>
+                        <td>@room.RoomType.ToString()</td>
+                        <td>@room.Building</td>
+
+                        <td>
+                            <a href="/Rooms/Edit/@room.RoomId">Edit</a>
+                            <a href="/Rooms/Delete/@room.RoomId">Delete</a>
+                        </td>
+                    </tr>    
+                
+                }
+
+            }
+        </tbody>
+    </table>
+</div>
+
+<a href="/Rooms/Index">Back to List </a>
+
+
