@@ -22,7 +22,7 @@ namespace SomerenApp.Repositories
             string roomSize = (string)reader["RoomSize"];
 
             //enum RoomType omzetten naar string want heeft datatype string in database
-            string roomTypeString = reader["RoomNumber"].ToString();
+            string roomTypeString = reader["RoomType"].ToString();
 
             if (Enum.TryParse<RoomType>(roomTypeString, out var roomType))
             {
@@ -90,9 +90,9 @@ namespace SomerenApp.Repositories
                                 "SELECT SCOPE_IDENTITY();";
 
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@RoomnNumber", room.RoomNumber);
-                command.Parameters.AddWithValue("@RoomnSize", room.RoomSize);
-                command.Parameters.AddWithValue("@RoomnType", room.RoomType.ToString());
+                command.Parameters.AddWithValue("@RoomNumber", room.RoomNumber);
+                command.Parameters.AddWithValue("@RoomSize", room.RoomSize);
+                command.Parameters.AddWithValue("@RoomType", room.RoomType.ToString());
                 command.Parameters.AddWithValue("@Building", room.Building);
 
                 command.Connection.Open();
@@ -106,14 +106,14 @@ namespace SomerenApp.Repositories
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = $"UPDATE Rooms SET RoomNumber = @RoomNumber, RoomSize = @Roomsize, " +
-                                "RoomType = @RoomTypr, @Building WHERE RoomId = @RoomId";
+                                "RoomType = @RoomType, Building = @Building WHERE RoomId = @RoomId";
 
 
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@RoomnId", room.RoomId);
-                command.Parameters.AddWithValue("@RoomnNumber", room.RoomNumber);
-                command.Parameters.AddWithValue("@RoomnSize", room.RoomSize);
-                command.Parameters.AddWithValue("@RoomnType", room.RoomType.ToString());
+                command.Parameters.AddWithValue("@RoomId", room.RoomId);
+                command.Parameters.AddWithValue("@RoomNumber", room.RoomNumber);
+                command.Parameters.AddWithValue("@RoomSize", room.RoomSize);
+                command.Parameters.AddWithValue("@RoomType", room.RoomType.ToString());
                 command.Parameters.AddWithValue("@Building", room.Building);
 
                 command.Connection.Open();
@@ -131,7 +131,7 @@ namespace SomerenApp.Repositories
             {
                 string query = $"DELETE Rooms FROM RoomNumber WHERE RoomId = @RoomId";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@RoomnId", room.RoomId);
+                command.Parameters.AddWithValue("@RoomId", room.RoomId);
                 
                 command.Connection.Open();
                 int nrOfRowsAffected = command.ExecuteNonQuery();
