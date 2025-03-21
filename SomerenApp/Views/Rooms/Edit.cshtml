@@ -1,1 +1,37 @@
-﻿
+﻿@model SomerenApp.Models.Room
+@{
+    ViewData["Title"] = "Edit Room";
+}
+
+<h4>Delete Room</h4>
+
+<form action="/Rooms/Edit" method="POST">
+    <input hidden type="number" name="RoomId" value="@Model?.RoomId" />
+
+    <div class="form-group py-2">
+        <label for="RoomNumber">Roomnumber: </label>
+        <input type="text" id="RoomNumber" name="RoomNumber" class="form-control" required value="@Model?.RoomNumber" />
+    </div>
+
+    <div class="form-group py-2">
+        <label for="RoomSize">Roomsize: </label>
+        <input type="text" id="RoomSize" name="RoomSize" class="form-control" required value="@Model?.RoomSize" />
+    </div>
+
+    <div class="form-group py-2">
+        <label for="RoomType">Roomtype: </label>
+        <input type="text" id="RoomType" name="RoomType" class="form-control" required value="@Model?.RoomType" />
+    </div>
+
+    <div class="form-group py-2">
+        <label for="Building">Building: </label>
+        <input type="text" id="Building" name="Building" class="form-control" required value="@Model?.Building" />
+    </div>
+
+    <button type="submit" class="btn btn-info">Save</button>
+
+</form>
+
+<a href="/Rooms/Index">Back to List</a>
+
+
