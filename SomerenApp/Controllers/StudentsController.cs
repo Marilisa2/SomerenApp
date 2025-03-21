@@ -14,15 +14,9 @@ namespace SomerenApp.Controllers
             return View(students);
         }
 
-
-        //public StudentsController(IStudentsRepository studentsRepository)
-        //{
-        //    _studentsRepository = studentsRepository;
-        //}
-
-        public StudentsController() 
+        public StudentsController(IStudentsRepository studentsRepository)
         {
-            _studentsRepository = new DummyStudentsRepository();
+            _studentsRepository = studentsRepository;
         }
 
         //Create
