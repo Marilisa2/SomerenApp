@@ -24,7 +24,7 @@ namespace SomerenApp.Repositories
             //enum RoomType omzetten naar string want heeft datatype string in database
             string roomTypeString = reader["RoomType"].ToString();
 
-            if (Enum.TryParse<RoomType>(roomTypeString, out var roomType))
+            if (!Enum.TryParse<RoomType>(roomTypeString, out var roomType))
             {
                 throw new InvalidOperationException($"Invalid Room type: {roomTypeString}");
             }
@@ -129,7 +129,7 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"DELETE Rooms FROM RoomNumber WHERE RoomId = @RoomId";
+                string query = $"DELETE FROM Rooms WHERE RoomId = @RoomId";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@RoomId", room.RoomId);
                 
