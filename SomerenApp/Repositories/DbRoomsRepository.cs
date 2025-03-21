@@ -42,7 +42,7 @@ namespace SomerenApp.Repositories
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT RoomId, RoomNumber, RoomSize, RoomType, Building FROM Rooms";
+                string query = "SELECT RoomId, RoomNumber, RoomSize, RoomType, Building FROM Rooms ORDER BY RoomNumber ASC";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Connection.Open();
