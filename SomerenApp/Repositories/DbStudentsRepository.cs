@@ -52,7 +52,8 @@ namespace SomerenApp.Repositories
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"SELECT StudentNumber, FirstName, LastName, TelephoneNumber, ClassName, RoomID FROM Students";
+                string query = $"SELECT StudentNumber, FirstName, LastName, TelephoneNumber, ClassName, RoomID FROM students " +
+                                "ORDER BY LastName ASC";
 
                 SqlCommand command = new SqlCommand(query, connection);
                 
@@ -73,7 +74,7 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"SELECT StudentNumber, FirstName, LastName, TelephoneNumber, ClassName, RoomID FROM Students WHERE StudentNumber = @StudentNumber";
+                string query = $"SELECT StudentNumber, FirstName, LastName, TelephoneNumber, ClassName, RoomID FROM students WHERE StudentNumber = @StudentNumber";
 
                 SqlCommand command = new SqlCommand(query, connection);
 
@@ -93,12 +94,12 @@ namespace SomerenApp.Repositories
             }
         }
 
-
+      
         public void Update(Student student)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"UPDATE Students SET FirstName = @Firstname, LastName = @LastName, " +
+                string query = $"UPDATE students SET FirstName = @Firstname, LastName = @LastName, " +
                                 "TelephoneNumber = @TelephoneNumber, ClassName = @ClassName, " +
                                 "RoomID = @RoomID WHERE StudentNumber = @StudentNumber";
                                 
@@ -124,7 +125,7 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"DELETE FROM Students WHERE StudentNumber = @StudentNumber";
+                string query = $"DELETE FROM students WHERE StudentNumber = @StudentNumber";
 
                 SqlCommand command = new SqlCommand(query, connection);
 
