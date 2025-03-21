@@ -32,10 +32,10 @@ namespace SomerenApp.Repositories
         }
         private Lecturer ReadLecturer(SqlDataReader reader)
         {
-            string lastName = (string)reader["Last Name"];
-            string firstName = (string)reader["First Name"];
-            int age = (int)reader["Age"];
-            string phoneNumber = (string)reader["Phone Number"];
+            string firstName = (string)reader["firstName"];
+            string lastName = (string)reader["lastName"];
+            int age = (byte)reader["age"];
+            string phoneNumber = (string)reader["phoneNumber"];
             return new Lecturer(lastName, firstName, age, phoneNumber);
         }
         public Lecturer? GetLecturerByID(int lecturerNumber)
