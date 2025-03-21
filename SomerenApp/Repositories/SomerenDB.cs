@@ -40,27 +40,5 @@ namespace SomerenApp.Repositories
             return new Docent(achternaam, voornaam, leeftijd, telefoonnummer);
         }
 
-        //Students
-        //public void Add(Student student)
-        //{
-        //    using (SqlConnection connection = new SqlConnection(_connectionString))
-        //    {
-        //        string query = $"INSERT INTO Students (StudentNumber, FirstName, LastName, TelephoneNumber, Class, RoomNumber)" +
-        //                        "VALUES (@StudentNumber, @FirstName, @Lastname, @TelephoneNumber, @Class, @RoomNumber);" +
-        //                        "SELECT SCOPE_IDENTITY();";
-
-        //        SqlCommand command = new SqlCommand(query, connection);
-
-        //        command.Parameters.AddWithValue("@StudenNumber", student.StudentNumber); command.Parameters.AddWithValue("@StudenNumber", student.StudentNumber);
-        //        command.Parameters.AddWithValue("@FirstName", student.FirstName);
-        //        command.Parameters.AddWithValue("@LastName", student.LastName);
-        //        command.Parameters.AddWithValue("@TelephoneNumber", student.TelephoneNumber);
-        //        command.Parameters.AddWithValue("@Class", student.Class);
-        //        command.Parameters.AddWithValue("@RoomNumber", student.RoomNumber);
-
-        //        command.Connection.Open();
-        //        student.StudentNumber = Convert.ToInt32(command.ExecuteScalar());
-        //    }
-        //}
     }
 }

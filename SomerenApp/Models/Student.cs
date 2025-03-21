@@ -6,18 +6,18 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string TelephoneNumber { get; set; }
-        public string Class {  get; set; }
+        public string ClassName {  get; set; }
        
-        public string RoomNumber { get; set; }
+        public int RoomID { get; set; }
 
-        public Student(int studentnumber, string firstname, string lastname, string telephonenumber, string @class, string kamernummer)
+        public Student(int studentnumber, string firstname, string lastname, string telephonenumber, string className, int roomId)
         {
             StudentNumber = studentnumber;
             FirstName = firstname;
             LastName = lastname;
             TelephoneNumber = telephonenumber;
-            Class = @class;
-            RoomNumber = kamernummer;
+            ClassName = className;
+            RoomID = roomId;
         }
 
         public Student()
