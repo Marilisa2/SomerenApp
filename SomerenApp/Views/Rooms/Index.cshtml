@@ -11,7 +11,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Roomnumber</th>
                 <th>Roomsize</th>
                 <th>Roomtype</th>
@@ -25,7 +24,6 @@
                 foreach (var room in Model)
                 {
                     <tr>
-                        <td>@room.RoomId</td>
                         <td>@room.RoomNumber</td>
                         <td>@room.RoomSize</td>
                         <td>@room.RoomType.ToString()</td>

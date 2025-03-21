@@ -25,7 +25,7 @@ namespace SomerenApp.Controllers
             List<Room> rooms = _roomsRepository.GetAllRooms();
 
             //passes list to view
-            return View();
+            return View(rooms);
         }
 
         //GET: RoomsController/Create
