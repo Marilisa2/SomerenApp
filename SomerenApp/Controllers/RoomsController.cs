@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using SomerenApp.Models;
 using SomerenApp.Repositories;
+using System.Diagnostics.Eventing.Reader;
 
 namespace SomerenApp.Controllers
 {
@@ -19,10 +20,19 @@ namespace SomerenApp.Controllers
         //    _roomsRepository = new DummyRoomsRepository();
         //}
 
-        public IActionResult Index()
+        public IActionResult Index(string? roomsize)
         {
-            //gets all rooms via repository
-            List<Room> rooms = _roomsRepository.GetAllRooms();
+            List<Room> rooms;
+
+            if (!string.IsNullOrEmpty(roomsize))
+            {
+                rooms = _roomsRepository.GetRoomsBySize(roomsize);
+            }
+            else {
+                //gets all rooms via repository
+                rooms = _roomsRepository.GetAllRooms();
+            
+            }
 
             //passes list to view
             return View(rooms);

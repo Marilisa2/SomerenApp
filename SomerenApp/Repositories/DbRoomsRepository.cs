@@ -156,5 +156,31 @@ namespace SomerenApp.Repositories
             }
 
         }
+
+        //methode om rooms te filteren op basis van aantal bedden
+        public List<Room> GetRoomsBySize(string roomSize)
+        {
+            List<Room> rooms = new List<Room>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT RoomId, RoomNumber, RoomSize, RoomType, Building FROM Rooms WHERE RoomSize = @RoomSize";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@RoomSize", roomSize);
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Room room = ReadRoom(reader);
+                    rooms.Add(room);
+                }
+
+                reader.Close();                   
+            }
+
+            return rooms;
+        }
     }
 }
