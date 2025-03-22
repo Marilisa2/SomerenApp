@@ -16,7 +16,7 @@ namespace SomerenApp.Repositories
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT lastName, firstName, age, phoneNumber FROM lecturers ORDER BY lastName";
+                string query = "SELECT lecturerNumber, firstName, lastName, age, phoneNumber, roomId FROM lecturers ORDER BY lastName";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Connection.Open();
@@ -32,19 +32,21 @@ namespace SomerenApp.Repositories
         }
         private Lecturer ReadLecturer(SqlDataReader reader)
         {
-            string lastName = (string)reader["Last Name"];
-            string firstName = (string)reader["First Name"];
-            int age = (int)reader["Age"];
-            string phoneNumber = (string)reader["Phone Number"];
-            return new Lecturer(lastName, firstName, age, phoneNumber);
+            int lecturerNumber = (int)reader["lecturerNumber"];
+            string firstName = (string)reader["firstName"];
+            string lastName = (string)reader["lastName"];
+            int age = (byte)reader["age"];
+            string phoneNumber = (string)reader["phoneNumber"];
+            int roomId = (int)reader["roomId"];
+            return new Lecturer(lecturerNumber, firstName, lastName,  age, phoneNumber, roomId);
         }
         public Lecturer? GetLecturerByID(int lecturerNumber)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"SELECT lastName, firstName, age, phoneNumber FROM lecturers WHERE lecturerNumber={lecturerNumber}";
+                string query = $"SELECT lastName, firstName, age, phoneNumber FROM lecturers WHERE lecturerNumber = @LecturerNumber";
                 SqlCommand command = new SqlCommand(query, connection);
-
+                command.Parameters.AddWithValue("@LecturerNumber", lecturerNumber);
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 Lecturer lecturer = ReadLecturer(reader);
@@ -56,14 +58,15 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"INSERT INTO users (firstName, lastName, age, phoneNumber){Environment.NewLine}" +
-                    "VALUES(@FirstName, @LastName, @Age, @PhoneNumber); " +
+                string query = $"INSERT INTO users (firstName, lastName, age, phoneNumber, roomId)" +
+                    "VALUES(@FirstName, @LastName, @Age, @PhoneNumber, @RoomId); " +
                     "SELECT SCOPE_IDENTITY();";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@FirstName", lecturer.FirstName);
                 command.Parameters.AddWithValue("@LastName", lecturer.LastName);
                 command.Parameters.AddWithValue("@Age", lecturer.Age);
                 command.Parameters.AddWithValue("@PhoneNumber", lecturer.PhoneNumber);
+                command.Parameters.AddWithValue("@RoomId", lecturer.RoomId);
                 command.Connection.Open();
                 lecturer.LecturerNumber = Convert.ToInt32(command.ExecuteScalar());
             }
@@ -78,20 +81,25 @@ namespace SomerenApp.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@FirstName", lecturer.FirstName);
                 command.Parameters.AddWithValue("@MobileNumber", lecturer.LastName);
-                command.Parameters.AddWithValue("@Age", lecturer.Age);
+                command.Parameters.AddWithValue("@Age", (byte)lecturer.Age);
                 command.Parameters.AddWithValue("@PhoneNumber", lecturer.PhoneNumber);
                 command.Parameters.AddWithValue("@LecturerNumber", lecturer.LecturerNumber);
                 command.Connection.Open();
+                int nrOfRowsAffected = command.ExecuteNonQuery();
+                if (nrOfRowsAffected == 0)
+                {
+                    throw new Exception("No records updated!");
+                }
             }
         }
 
-        public void DeleteLecturer(int lecturerNumber)
+        public void DeleteLecturer(Lecturer lecturer)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = $"DELETE FROM users WHERE lecturerNumber = @lecturerNumber";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@lecturerNumber", lecturerNumber);
+                command.Parameters.AddWithValue("@lecturerNumber", lecturer.LecturerNumber);
                 command.Connection.Open();
             }
         }

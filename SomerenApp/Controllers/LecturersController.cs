@@ -55,7 +55,7 @@ new Lecturer("Stein", "Clifford", 60, "020 1234567"),
         {
             try
             {
-                _lecturersRepository.DeleteLecturer(lecturer.LecturerNumber);
+                _lecturersRepository.DeleteLecturer(lecturer);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -86,6 +86,5 @@ new Lecturer("Stein", "Clifford", 60, "020 1234567"),
                 return View(lecturer);
             }
         }
-
     }
 }
