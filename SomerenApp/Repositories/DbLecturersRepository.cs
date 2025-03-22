@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using SomerenApp.Models;
+using System.Data;
 
 namespace SomerenApp.Repositories
 {
@@ -35,7 +36,7 @@ namespace SomerenApp.Repositories
             int lecturerNumber = (int)reader["lecturerNumber"];
             string firstName = (string)reader["firstName"];
             string lastName = (string)reader["lastName"];
-            int age = (byte)reader["age"];
+            byte age = (byte)reader["age"];
             string phoneNumber = (string)reader["phoneNumber"];
             int roomId = (int)reader["roomId"];
             return new Lecturer(lecturerNumber, firstName, lastName,  age, phoneNumber, roomId);
@@ -88,11 +89,17 @@ namespace SomerenApp.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@FirstName", lecturer.FirstName);
                 command.Parameters.AddWithValue("@LastName", lecturer.LastName);
-                command.Parameters.AddWithValue("@Age", (byte)lecturer.Age);
+                command.Parameters.AddWithValue("@Age", lecturer.Age);
                 command.Parameters.AddWithValue("@PhoneNumber", lecturer.PhoneNumber);
                 command.Parameters.AddWithValue("@LecturerNumber", lecturer.LecturerNumber);
                 command.Parameters.AddWithValue("@RoomId", lecturer.RoomId);
                 command.Connection.Open();
+
+                int nrofRowsAffected = command.ExecuteNonQuery();
+                if (nrofRowsAffected == 0)
+                {
+                    throw new Exception("No records updated!");
+                }
             }
         }
 
@@ -104,6 +111,11 @@ namespace SomerenApp.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@LecturerNumber", lecturer.LecturerNumber);
                 command.Connection.Open();
+                int nrofRowsAffected = command.ExecuteNonQuery();
+                if (nrofRowsAffected == 0)
+                {
+                    throw new Exception("No records updated!");
+                }
             }
         }
     }
