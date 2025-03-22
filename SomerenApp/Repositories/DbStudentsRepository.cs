@@ -16,23 +16,8 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                //controleren of de RoomId bestaat in de Roomstabel
-                string checkRoomQuery = "SELECT COUNT(*) FROM Rooms WHERE RoomId = @RoomId";
-                SqlCommand checkRoomCommand = new SqlCommand(checkRoomQuery, connection);
-                checkRoomCommand.Parameters.AddWithValue("@RoomId", student.RoomId);
-
-                connection.Open();
-                int roomCount = (int)checkRoomCommand.ExecuteScalar();
-
-                if (roomCount == 0)
-                {
-                    throw new Exception($"The RoomId {student.RoomId} does not exist");
-                }
-
-                //Als RoomId bestaat voeg dan student toe
-
-                string query = $"INSERT INTO students (FirstName, LastName, TelephoneNumber, ClassName, RoomId)" +
-                                "VALUES (@FirstName, @LastName, @TelephoneNumber, @ClassName, @RoomId);" +
+                string query = $"INSERT INTO Students (FirstName, LastName, TelephoneNumber, ClassName, RoomID)" +
+                                "VALUES (@FirstName, @LastName, @TelephoneNumber, @ClassName, @RoomID);" +
                                 "SELECT SCOPE_IDENTITY();";
 
                 SqlCommand command = new SqlCommand(query, connection);
@@ -100,7 +85,7 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"SELECT StudentNumber, FirstName, LastName, TelephoneNumber, ClassName, RoomId FROM students WHERE StudentNumber = @StudentNumber";
+                string query = $"SELECT StudentNumber, FirstName, LastName, TelephoneNumber, ClassName, RoomID FROM students WHERE StudentNumber = @StudentNumber";
 
                 SqlCommand command = new SqlCommand(query, connection);
 
@@ -142,7 +127,7 @@ namespace SomerenApp.Repositories
                 //Update query
                 string query = $"UPDATE students SET FirstName = @FirstName, LastName = @LastName, " +
                                 "TelephoneNumber = @TelephoneNumber, ClassName = @ClassName, " +
-                                "RoomId = @RoomId WHERE StudentNumber = @StudentNumber";
+                                "RoomID = @RoomID WHERE StudentNumber = @StudentNumber";
                                 
                 SqlCommand command = new SqlCommand(query, connection);
 
@@ -179,7 +164,6 @@ namespace SomerenApp.Repositories
 
                 }
                 string query = $"DELETE FROM students WHERE StudentNumber = @StudentNumber";
-
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@StudentNumber", student.StudentNumber);
