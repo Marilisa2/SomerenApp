@@ -19,7 +19,6 @@
             ClassName = className;
             RoomID = roomId;
         }
-
         public Student()
         {
 

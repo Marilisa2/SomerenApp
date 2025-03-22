@@ -5,11 +5,7 @@
 
 <h4>Edit Student</h4>
 <form action="/Students/Edit" method="POST">
-	<div class="form-group py-2">
-		<label for="StudentNumber">Student number:</label>
-		<input type="text" id="StudentNumber" name="StudentNumber" class="form-control" required value="@Model?.StudentNumber" />
-	</div>
-
+	<input hidden type="number" name="StudentNumber" value="@Model?.StudentNumber">
 	<div class="form-group py-2">
 		<label for="FirstName">First name:</label>
 		<input type="text" id="FirstName" name="FirstName" class="form-control" required value="@Model?.FirstName" />
