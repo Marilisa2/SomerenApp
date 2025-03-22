@@ -35,8 +35,9 @@ namespace SomerenApp.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ViewData["ErrorMessage"] = ex.Message;
                 return View(student);
             }
         }
@@ -61,7 +62,7 @@ namespace SomerenApp.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return View(student);
             }
@@ -87,7 +88,7 @@ namespace SomerenApp.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return View(student);
             }
