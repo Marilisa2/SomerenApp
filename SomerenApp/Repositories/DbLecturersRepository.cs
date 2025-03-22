@@ -44,13 +44,20 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"SELECT lastName, firstName, age, phoneNumber FROM lecturers WHERE lecturerNumber = @LecturerNumber";
+                string query = $"SELECT lastName, firstName, age, phoneNumber, lecturerNumber, roomId FROM lecturers WHERE lecturerNumber = @LecturerNumber";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@LecturerNumber", lecturerNumber);
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
-                Lecturer lecturer = ReadLecturer(reader);
-                return lecturer;
+                if (reader.Read())
+                {
+                    Lecturer lecturer = ReadLecturer(reader);
+                    return lecturer;
+                }
+                else
+                {
+                    throw new Exception("No lecturer was found by given lecturerNumber.");
+                }
             }
         }
 
@@ -58,7 +65,7 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"INSERT INTO users (firstName, lastName, age, phoneNumber, roomId)" +
+                string query = $"INSERT INTO lecturers (firstName, lastName, age, phoneNumber, roomId)" +
                     "VALUES(@FirstName, @LastName, @Age, @PhoneNumber, @RoomId); " +
                     "SELECT SCOPE_IDENTITY();";
                 SqlCommand command = new SqlCommand(query, connection);
@@ -76,20 +83,16 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"UPDATE users SET firstName = @FirstName, lastName = @LastName, " +
-                    "age = @Age, phoneNumber = @PhoneNumber WHERE lecturerNumber = @LecturerNumber";
+                string query = $"UPDATE lecturers SET firstName = @FirstName, lastName = @LastName, " +
+                    "age = @Age, phoneNumber = @PhoneNumber, roomId = @RoomId WHERE lecturerNumber = @LecturerNumber";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@FirstName", lecturer.FirstName);
-                command.Parameters.AddWithValue("@MobileNumber", lecturer.LastName);
+                command.Parameters.AddWithValue("@LastName", lecturer.LastName);
                 command.Parameters.AddWithValue("@Age", (byte)lecturer.Age);
                 command.Parameters.AddWithValue("@PhoneNumber", lecturer.PhoneNumber);
                 command.Parameters.AddWithValue("@LecturerNumber", lecturer.LecturerNumber);
+                command.Parameters.AddWithValue("@RoomId", lecturer.RoomId);
                 command.Connection.Open();
-                int nrOfRowsAffected = command.ExecuteNonQuery();
-                if (nrOfRowsAffected == 0)
-                {
-                    throw new Exception("No records updated!");
-                }
             }
         }
 
@@ -97,9 +100,9 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"DELETE FROM users WHERE lecturerNumber = @lecturerNumber";
+                string query = $"DELETE FROM lecturers WHERE lecturerNumber = @LecturerNumber";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@lecturerNumber", lecturer.LecturerNumber);
+                command.Parameters.AddWithValue("@LecturerNumber", lecturer.LecturerNumber);
                 command.Connection.Open();
             }
         }

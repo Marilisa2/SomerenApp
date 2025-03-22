@@ -1,8 +1,10 @@
 ﻿@model SomerenApp.Models.Lecturer
 @{
 	ViewData["Title"] = "Create Lecturer";
+	string? errorMessage = (string)ViewData["ErrorMessage"];
 }
-<h1>Delete Lecturer</h1>
+<h4>@errorMessage</h4>
+<h1>Add Lecturer</h1>
 <form action="/Lecturers/Create" method="post">
 	<div class="form-group py-2">
 		<label for="FirstName">First name:</label>
@@ -21,8 +23,8 @@
 		<input type="tel" id="PhoneNumber" name="PhoneNumber" class="form-control" required value="" />
 	</div>
 	<div class="form-group py-2">
-		<label for="RoomNumber">Roomnumber:</label>
-		<input type="text" id="RoomNumber" name="RoomNumber" class="form-control" required value="" />
+		<label for="RoomId">RoomId:</label>
+		<input type="text" id="RoomId" name="RoomId" class="form-control" required value="" />
 	</div>
 	<button type="submit" class="btn btn-primary">Add Lecturer</button>
 </form>

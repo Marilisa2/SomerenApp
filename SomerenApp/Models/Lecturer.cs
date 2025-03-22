@@ -19,9 +19,6 @@
             RoomId = roomId;
         }
 
-        public Lecturer()
-        {
-            
-        }
+        public Lecturer(){}
     }
 }
