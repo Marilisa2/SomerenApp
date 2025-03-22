@@ -41,16 +41,27 @@ namespace SomerenApp.Controllers
         {
             try
             {
-                //adding room via repository
-                _roomsRepository.Add(room);
+                if (ModelState.IsValid)
+                {
+                    if (_roomsRepository.GetAllRooms().Any(x => x.RoomNumber == room.RoomNumber))
+                    {
+                        //foutmelding toevoegen aan ViewData als kamernummer als bestaat
+                        ViewData["ErrorMessage"] = "This room number already exists.";
+                    }
 
-                //go back to room list via Index
-                return RedirectToAction("Index");
+                    //adding room via repository
+                    _roomsRepository.Add(room);
+
+                    //go back to room list via Index
+                    return RedirectToAction("Index");
+                }                     
             }
             catch (Exception ex)
             {
-                return View(room);
+                ModelState.AddModelError("", ex.Message);
             }
+
+            return View(room);
         }
 
         //GET: RoomsController/Edit

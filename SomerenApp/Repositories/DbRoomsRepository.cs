@@ -85,6 +85,20 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                //controleren of er een room bestaat met dezelfde RoomNumber
+                string checkQuery = "SELECT COUNT(*) FROM Rooms WHERE RoomNumber = @RoomNumber";
+                SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
+                checkCommand.Parameters.AddWithValue("@RoomNumber", room.RoomNumber);
+
+                connection.Open();
+                int existingRoomCount = (int)checkCommand.ExecuteScalar();
+
+                if (existingRoomCount > 0)
+                {
+                    //als kamer met gegeven RoomNumber bestaat geeft het een foutmelding
+                    throw new Exception($"A room with the number '{room.RoomNumber}' already exists. ");
+                }
+
                 string query = $"INSERT INTO Rooms (RoomNumber, RoomSize, RoomType, Building)" +
                                 "VALUES (@RoomNumber, @RoomSize, @RoomType, @Building); " +
                                 "SELECT SCOPE_IDENTITY();";
