@@ -8,30 +8,54 @@
 <form action="/Rooms/Delete" method="POST">
     <input hidden type="number" name="RoomId" value="@Model?.RoomId" />
 
-    <div class="form-group py-2">
+    @*RoomNumber*@
+    <div class="form-group py-2 mt-2 d-block">
         <label for="RoomNumber">Roomnumber: </label>
-        <input type="text" id="RoomNumber" name="RoomNumber" class="form-control" required value="@Model?.RoomNumber" />
+        <input type="text" id="RoomNumber" name="RoomNumber" class="form-control mt-2 d-block" required value="@Model?.RoomNumber" readonly/> @*readonly zorgt ervoor dat je dit niet kan aanpassen*@
     </div>
 
+    @*RoomSize*@
     <div class="form-group py-2">
         <label for="RoomSize">Roomsize: </label>
-        <input type="text" id="RoomSize" name="RoomSize" class="form-control" required value="@Model?.RoomSize" />
+        <select name="RoomSize" id="RoomSize" class="form-control mt-2 d-block" disabled>
+            <option value="Single Room - GF" selected="@Model.RoomSize == " Single Room - GF">Single Room - GF</option> @*kamer voor docenten*@
+            <option value="Dormitory - 8 beds" selected="@Model.RoomSize == " Dormitory - 8 beds">Dormitory - 8 beds</option> @*kamer voor studenten*@
+        </select>
     </div>
 
+    @*RoomType*@  
     <div class="form-group py-2">
-        <label for="RoomType">Roomtype: </label>
-        <input type="text" id="RoomType" name="RoomType" class="form-control" required value="@Model?.RoomType" />
+        <label for="RoomType">RoomType: </label>
+        <select name="RoomType" id="RoomType" class="form-control mt-2 d-block" disabled>
+            <option value="Lecturer" selected="@Model.RoomType == " Lecturer">Lecturer</option> @*Docent*@
+            <option value="Student" selected="@Model.RoomType == " Student">Student</option> @*Student*@
+        </select>
     </div>
 
+    @*Building*@
     <div class="form-group py-2">
         <label for="Building">Building: </label>
-        <input type="text" id="Building" name="Building" class="form-control" required value="@Model?.Building" />
+        <select name="Building" id="Building" class="form-control mt-2 d-block" disabled>
+            <option value="A" selected="@Model.Building == "A">A</option> @*gebouw A*@
+            <option value="B" selected="@Model.Building == "B">B</option> @*gebouw B*@
+        </select>
     </div>
 
-    <button type="submit" class="btn btn-info">Delete</button>
+    <button type="submit" class="btn btn-link mt-3 d-block" style="background-color:#585FD6; color: #FFFFFF;" >Delete</button>
 
+    
 </form>
 
-<a href="/Rooms/Index">Back to List</a>
+<style>
+    a, h4 {
+        color: #585FD6;
+    }
+
+    button {
+        background-color: #585FD6;
+    }
+</style>
+
+<a href="/Rooms/Index" class="mt-3 d-block">Back to List</a>
 
 

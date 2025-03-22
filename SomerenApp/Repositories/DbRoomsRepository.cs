@@ -85,6 +85,20 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                //controleren of er een room bestaat met dezelfde RoomNumber
+                string checkQuery = "SELECT COUNT(*) FROM Rooms WHERE RoomNumber = @RoomNumber";
+                SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
+                checkCommand.Parameters.AddWithValue("@RoomNumber", room.RoomNumber);
+
+                connection.Open();
+                int existingRoomCount = (int)checkCommand.ExecuteScalar();
+
+                if (existingRoomCount > 0)
+                {
+                    //als kamer met gegeven RoomNumber bestaat geeft het een foutmelding
+                    throw new Exception($"A room with the number '{room.RoomNumber}' already exists. ");
+                }
+
                 string query = $"INSERT INTO Rooms (RoomNumber, RoomSize, RoomType, Building)" +
                                 "VALUES (@RoomNumber, @RoomSize, @RoomType, @Building); " +
                                 "SELECT SCOPE_IDENTITY();";
@@ -141,6 +155,32 @@ namespace SomerenApp.Repositories
                 }
             }
 
+        }
+
+        //methode om rooms te filteren op basis van aantal bedden
+        public List<Room> GetRoomsBySize(string roomSize)
+        {
+            List<Room> rooms = new List<Room>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT RoomId, RoomNumber, RoomSize, RoomType, Building FROM Rooms WHERE RoomSize = @RoomSize";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@RoomSize", roomSize);
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Room room = ReadRoom(reader);
+                    rooms.Add(room);
+                }
+
+                reader.Close();                   
+            }
+
+            return rooms;
         }
     }
 }

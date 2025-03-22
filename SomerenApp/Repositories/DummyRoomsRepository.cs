@@ -33,6 +33,11 @@ namespace SomerenApp.Repositories
             return rooms.FirstOrDefault(x => x.RoomId == roomId);
         }
 
+        public List<Room> GetRoomsBySize(string roomSize)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Room room)
         {
             throw new NotImplementedException();

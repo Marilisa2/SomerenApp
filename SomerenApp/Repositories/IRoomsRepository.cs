@@ -10,5 +10,8 @@ namespace SomerenApp.Repositories
         void Add(Room room);
         void Update(Room room);
         void Delete(Room room);
+
+        //methode om kamers te filteren op basis va het aantal bedden
+        List<Room> GetRoomsBySize(string roomSize);
     }
 }

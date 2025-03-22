@@ -3,35 +3,61 @@
     ViewData["Title"] = "Edit Room";
 }
 
-<h4>Delete Room</h4>
+<h4>Edit Room</h4>
 
 <form action="/Rooms/Edit" method="POST">
     <input hidden type="number" name="RoomId" value="@Model?.RoomId" />
 
+    @*RoomNumber*@
     <div class="form-group py-2">
         <label for="RoomNumber">Roomnumber: </label>
-        <input type="text" id="RoomNumber" name="RoomNumber" class="form-control" required value="@Model?.RoomNumber" />
+        <input type="text" placeholder="- Enter a room number (e.g., A1-03 or B1-04) -" id="RoomNumber" name="RoomNumber" class="form-control mt-2 d-block" required value="@Model?.RoomNumber" />
     </div>
 
+    @*RoomSize*@
     <div class="form-group py-2">
         <label for="RoomSize">Roomsize: </label>
-        <input type="text" id="RoomSize" name="RoomSize" class="form-control" required value="@Model?.RoomSize" />
+        <select name="RoomSize" id="RoomSize" class="form-control mt-2 d-block">
+            <option value=""> - Select a Roomsize - </option>
+            <option value="Single Room - GF" selected="@Model.RoomSize == "Single Room - GF">Single Room - GF</option> @*kamer voor docenten*@
+            <option value="Dormitory - 8 beds" selected="@Model.RoomSize == "Dormitory - 8 beds">Dormitory - 8 beds</option> @*kamer voor studenten*@
+        </select>
     </div>
 
+    @*RoomType*@
     <div class="form-group py-2">
-        <label for="RoomType">Roomtype: </label>
-        <input type="text" id="RoomType" name="RoomType" class="form-control" required value="@Model?.RoomType" />
+        <label for="RoomType">RoomType: </label>
+        <select name="RoomType" id="RoomType" class="form-control mt-2 d-block">
+            <option value=""> - Select a Roomtype - </option>
+            <option value="Lecturer" selected="@Model.RoomType == "Lecturer">Lecturer</option> @*Docent*@
+            <option value="Student" selected="@Model.RoomType == "Student">Student</option> @*Student*@
+        </select>
     </div>
 
+    @*Building*@
     <div class="form-group py-2">
         <label for="Building">Building: </label>
-        <input type="text" id="Building" name="Building" class="form-control" required value="@Model?.Building" />
+        <select name="Building" id="Building" class="form-control mt-2 d-block">
+            <option value=""> - Select a Building - </option>
+            <option value="A" selected="@Model.Building == "A">A</option> @*gebouw A*@
+            <option value="B" selected="@Model.Building == "B">B</option> @*gebouw B*@
+        </select>
     </div>
 
-    <button type="submit" class="btn btn-info">Save</button>
+    <button type="submit" class="btn btn-link mt-3 d-block" style="background-color:#585FD6; color: #FFFFFF;" >Save</button>
 
 </form>
 
-<a href="/Rooms/Index">Back to List</a>
+<style>
+    a, h4 {
+        color: #585FD6;
+    }
+
+    button {
+        background-color: #585FD6;
+    }
+</style>
+
+<a href="/Rooms/Index" class="mt-2 d-block">Back to List</a>
 
 
