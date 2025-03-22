@@ -18,7 +18,7 @@
             RoomId = roomId;
             RoomNumber = roomNumber;
             RoomSize = roomSize;
-            RoomType = roomType; //wijzigen!
+            RoomType = roomType;
             Building = building;
         }
     }
