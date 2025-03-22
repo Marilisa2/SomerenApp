@@ -6,11 +6,7 @@
 
 <h4>New Student</h4>
 <form action="/Students/Create" method="POST">
-	<div class="form-group py-2">
-		<label for="StudentNumber">Student number:</label>
-		<input type="text" id="StudentNumber" name="StudentNumber" class="form-control" required value="@Model?.StudentNumber" />
-	</div>
-
+	
 	<div class="form-group py-2">
 		<label for="FirstName">First name:</label>
 		<input type="text" id="FirstName" name="FirstName" class="form-control" required value="@Model?.FirstName" />
@@ -31,8 +27,9 @@
 		<input type="text" id="ClassName" name="ClassName" class="form-control" required value="@Model?.ClassName" />
 	</div>
 
-	<button type="submit" class="btn btn-primary my-2">Add</button>
+	<button type="submit">Add</button>
 </form>
+
 
 <a href="/Students/Index">Back to list</a>
 
