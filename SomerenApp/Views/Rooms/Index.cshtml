@@ -8,8 +8,8 @@
     <h1 class="display-4">Rooms</h1>
     <a href="/Rooms/Create">Create New</a>
 
-    <table class="table">
-        <thead>
+    <table class="table table-bordered mt-3 table-hover">
+        <thead style="background-color: #EEEFFB; color:#585FD6;">
             <tr>
                 <th>Roomnumber</th>
                 <th>Roomsize</th>
@@ -23,15 +23,15 @@
             @{
                 foreach (var room in Model)
                 {
-                    <tr>
+                    <tr style="background-color: #F9EEE6;">
                         <td>@room.RoomNumber</td>
                         <td>@room.RoomSize</td>
                         <td>@room.RoomType.ToString()</td>
                         <td>@room.Building</td>
 
                         <td>
-                            <a href="/Rooms/Edit/@room.RoomId">Edit</a>
-                            <a href="/Rooms/Delete/@room.RoomId">Delete</a>
+                            <a href="/Rooms/Edit/@room.RoomId" class="link">Edit</a> |
+                            <a href="/Rooms/Delete/@room.RoomId" class="link">Delete</a>
                         </td>
                     </tr>    
                 
@@ -41,6 +41,23 @@
         </tbody>
     </table>
 </div>
+<style>
+    .table-hover tbody tr:hover{
+        background-color: #F3E0DC;
+    }
+
+    .table, table th, .table td{
+        border-color: #585FD6;
+    }
+
+    a, h1{
+        color: #585FD6;
+    }
+
+    a:hover{
+        color: #000000;
+    }
+</style>
 
 <a href="/Rooms/Index">Back to List </a>
 
