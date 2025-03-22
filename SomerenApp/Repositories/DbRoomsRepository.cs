@@ -14,7 +14,7 @@ namespace SomerenApp.Repositories
         }
 
 
-        public Room ReadRoom(SqlDataReader reader)
+        private Room ReadRoom(SqlDataReader reader)
         {
             //retrieve data from fields from database
             int id = (int)reader["RoomId"];
@@ -85,33 +85,39 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                //controleren of er een room bestaat met dezelfde RoomNumber
-                string checkQuery = "SELECT COUNT(*) FROM Rooms WHERE RoomNumber = @RoomNumber";
-                SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
-                checkCommand.Parameters.AddWithValue("@RoomNumber", room.RoomNumber);
-
-                connection.Open();
-                int existingRoomCount = (int)checkCommand.ExecuteScalar();
-
-                if (existingRoomCount > 0)
+                try
                 {
-                    //als kamer met gegeven RoomNumber bestaat geeft het een foutmelding
-                    throw new Exception($"A room with the number '{room.RoomNumber}' already exists. ");
+                    //controleren of er een room bestaat met dezelfde RoomNumber
+                    string checkQuery = "SELECT COUNT(*) FROM Rooms WHERE RoomNumber = @RoomNumber";
+                    SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
+                    checkCommand.Parameters.AddWithValue("@RoomNumber", room.RoomNumber);
+
+                    connection.Open();
+                    int existingRoomCount = (int)checkCommand.ExecuteScalar();
+
+                    if (existingRoomCount > 0)
+                    {
+                        //als kamer met gegeven RoomNumber bestaat geeft het een foutmelding
+                        throw new Exception($"A room with the number '{room.RoomNumber}' already exists. ");
+                    }
+
+                    string query = $"INSERT INTO Rooms (RoomNumber, RoomSize, RoomType, Building)" +
+                                    "VALUES (@RoomNumber, @RoomSize, @RoomType, @Building); " +
+                                    "SELECT SCOPE_IDENTITY();";
+
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@RoomNumber", room.RoomNumber);
+                    command.Parameters.AddWithValue("@RoomSize", room.RoomSize);
+                    command.Parameters.AddWithValue("@RoomType", room.RoomType.ToString());
+                    command.Parameters.AddWithValue("@Building", room.Building);
+
+                    
+                    room.RoomId = Convert.ToInt32(command.ExecuteScalar()); //haalt de RoomNumber op
                 }
-
-                string query = $"INSERT INTO Rooms (RoomNumber, RoomSize, RoomType, Building)" +
-                                "VALUES (@RoomNumber, @RoomSize, @RoomType, @Building); " +
-                                "SELECT SCOPE_IDENTITY();";
-
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@RoomNumber", room.RoomNumber);
-                command.Parameters.AddWithValue("@RoomSize", room.RoomSize);
-                command.Parameters.AddWithValue("@RoomType", room.RoomType.ToString());
-                command.Parameters.AddWithValue("@Building", room.Building);
-
-                command.Connection.Open();
-                room.RoomId = Convert.ToInt32(command.ExecuteScalar()); //haalt de RoomNumber op
-                
+                catch (Exception ex)
+                { 
+                    throw new Exception("An error occured while adding a room: " + ex.Message);
+                }
             }
         }
 

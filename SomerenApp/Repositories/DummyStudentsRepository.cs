@@ -36,5 +36,10 @@ namespace SomerenApp.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public int GetAvailableRoomId()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

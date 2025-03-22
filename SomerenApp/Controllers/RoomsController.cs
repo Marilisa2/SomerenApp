@@ -24,7 +24,7 @@ namespace SomerenApp.Controllers
         {
             List<Room> rooms;
 
-            if (!string.IsNullOrEmpty(roomsize))
+            if (!string.IsNullOrEmpty(roomsize) && roomsize != "All")
             {
                 rooms = _roomsRepository.GetRoomsBySize(roomsize);
             }
@@ -69,6 +69,9 @@ namespace SomerenApp.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex.Message);
+                //ViewData["ErrorMessage"] = ex.Message;
+                return View(room);
+
             }
 
             return View(room);

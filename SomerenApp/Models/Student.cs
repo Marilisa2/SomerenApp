@@ -8,7 +8,7 @@
         public string TelephoneNumber { get; set; }
         public string ClassName {  get; set; }
        
-        public int RoomID { get; set; }
+        public int RoomId { get; set; }
 
         public Student(int studentnumber, string firstname, string lastname, string telephonenumber, string className, int roomId)
         {
@@ -17,7 +17,7 @@
             LastName = lastname;
             TelephoneNumber = telephonenumber;
             ClassName = className;
-            RoomID = roomId;
+            RoomId = roomId;
         }
         public Student()
         {
