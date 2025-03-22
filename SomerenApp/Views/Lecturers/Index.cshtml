@@ -3,11 +3,11 @@
 	ViewData["Title"] = "Lecturer";
 }
 <div class="text-center">
-	<h1 class="display-4">Lecturers</h1>
+	<h1 class="display-4 text-info">Lecturers</h1>
 	<a href="Lecturers/Create">Add Lecturer</a>
 </div>
-<table class="table">
-	<thead>
+<table class="table table-hover">
+	<thead class="table-dark">
 		<tr>
 			<th>Last name</th>
 			<th>First name</th>
@@ -16,7 +16,7 @@
 			<th>Edit/Delete</th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody class="bg-opacity-10 bg-black">
 		@{
 			foreach (Lecturer lecturer in Model)
 			{
@@ -26,8 +26,8 @@
 					<td>@lecturer.Age</td>
 					<td>@lecturer.PhoneNumber</td>
 					<td>
-						<a href="/Lecturers/Edit/@lecturer.LecturerNumber">Edit</a>
-						<a href="/Lecturers/Delete/@lecturer.LecturerNumber">Delete</a>
+						<a class="alert-warning" href="/Lecturers/Edit/@lecturer.LecturerNumber">Edit</a>
+						<a class="alert-danger" href="/Lecturers/Delete/@lecturer.LecturerNumber">Delete</a>
 					</td>
 				</tr>
 			}
