@@ -102,7 +102,6 @@ namespace SomerenApp.Controllers
                 //haalt de eerste beschikbare RoomId uit de Room-tabel
                 int roomId = _studentsRepository.GetAvailableRoomId();
 
-
                 //koppel gevonden RoomId aan student
                 student.RoomId = roomId;
 
