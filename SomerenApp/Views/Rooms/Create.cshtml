@@ -8,7 +8,7 @@
 <form action="/Rooms/Create" method="POST">
 
     @*RoomNumber*@
-    <div class="form-group py-2 mt-2 d-block">
+    <div class="form-group py-2 mt-2 d-block fw-medium">
         <label for="RoomNumber">Roomnumber: </label>
         <input type="text" placeholder="- Enter a room number (e.g., A1-03 or B1-04) -"id="RoomNumber" name="RoomNumber" class="form-control mt-2 d-block" required value="@Model?.RoomNumber" />
     </div>
@@ -56,7 +56,7 @@
 </form>
 
 <style>
-    a, h4{
+    a, h4, label{
         color: #585FD6;
     }
 

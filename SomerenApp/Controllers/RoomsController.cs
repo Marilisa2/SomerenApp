@@ -28,12 +28,11 @@ namespace SomerenApp.Controllers
             {
                 rooms = _roomsRepository.GetRoomsBySize(roomsize);
             }
-            else {
+            else 
+            {
                 //gets all rooms via repository
                 rooms = _roomsRepository.GetAllRooms();
-            
             }
-
             //passes list to view
             return View(rooms);
         }

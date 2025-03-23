@@ -48,14 +48,13 @@ namespace SomerenApp.Repositories
 
         public int GetAvailableRoomId()
         {
-            //haalt eerste beschikbare roomId op
-            using (var connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                var command = new SqlCommand("SELECT TOP 1 RoomId FROM Rooms", connection);
+                SqlCommand command = new SqlCommand("SELECT TOP 1 RoomId FROM Rooms", connection);
                 return Convert.ToInt32(command.ExecuteScalar());
             }
-            
+
         }
         private Student ReadStudent(SqlDataReader reader) 
         {
