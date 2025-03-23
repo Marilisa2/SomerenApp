@@ -29,7 +29,7 @@ namespace SomerenApp.Repositories
                     throw new Exception($"The RoomId {student.RoomId} does not exist.");
                 }
 
-                //student toevogen
+                //student toevoegen
                 string query = $"INSERT INTO students (FirstName, LastName, TelephoneNumber, ClassName, RoomId)" +
                                 "VALUES (@FirstName, @LastName, @TelephoneNumber, @ClassName, @RoomId);" +
                                 "SELECT SCOPE_IDENTITY();";
@@ -51,7 +51,7 @@ namespace SomerenApp.Repositories
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand("SELECT TOP 1 RoomId FROM Rooms", connection);
+                SqlCommand command = new SqlCommand("SELECT TOP 1 RoomId FROM Rooms WHERE RoomType = 'Student' ORDER BY NEWID()", connection);
                 return Convert.ToInt32(command.ExecuteScalar());
             }
 
