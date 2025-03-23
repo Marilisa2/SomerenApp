@@ -24,16 +24,15 @@ namespace SomerenApp.Controllers
         {
             List<Room> rooms;
 
-            if (!string.IsNullOrEmpty(roomsize))
+            if (!string.IsNullOrEmpty(roomsize) && roomsize != "All")
             {
                 rooms = _roomsRepository.GetRoomsBySize(roomsize);
             }
-            else {
+            else 
+            {
                 //gets all rooms via repository
                 rooms = _roomsRepository.GetAllRooms();
-            
             }
-
             //passes list to view
             return View(rooms);
         }

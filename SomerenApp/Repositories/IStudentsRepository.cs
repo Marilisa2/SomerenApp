@@ -9,5 +9,7 @@ namespace SomerenApp.Repositories
         void Add(Student student);
         void Update(Student student);
         void Delete(Student student);
+
+        int GetAvailableRoomId();
     }
 }

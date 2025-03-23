@@ -16,23 +16,46 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"INSERT INTO Students (FirstName, LastName, TelephoneNumber, ClassName, RoomId)" +
+                //controleert of RoomId in de Rooms-tabel bestaat
+                string checkRoomQuery = "SELECT COUNT(*) FROM Rooms WHERE RoomId = @RoomId";
+                SqlCommand checkRoomCommand = new SqlCommand(checkRoomQuery, connection);
+                checkRoomCommand.Parameters.AddWithValue("@RoomId", student.RoomId);
+
+                connection.Open();
+                int roomCount = (int)checkRoomCommand.ExecuteScalar();
+
+                if (roomCount == 0)
+                {
+                    throw new Exception($"The RoomId {student.RoomId} does not exist.");
+                }
+
+                //student toevogen
+                string query = $"INSERT INTO students (FirstName, LastName, TelephoneNumber, ClassName, RoomId)" +
                                 "VALUES (@FirstName, @LastName, @TelephoneNumber, @ClassName, @RoomId);" +
                                 "SELECT SCOPE_IDENTITY();";
 
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@FirstName", student.FirstName);
-                command.Parameters.AddWithValue("@Lastname", student.LastName);
+                command.Parameters.AddWithValue("@LastName", student.LastName);
                 command.Parameters.AddWithValue("@TelephoneNumber", student.TelephoneNumber);
                 command.Parameters.AddWithValue("@ClassName", student.ClassName);
                 command.Parameters.AddWithValue("@RoomId", student.RoomId);
 
-                command.Connection.Open();
                 student.StudentNumber = Convert.ToInt32(command.ExecuteScalar());
             }
         }
 
+        public int GetAvailableRoomId()
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("SELECT TOP 1 RoomId FROM Rooms", connection);
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
+
+        }
         private Student ReadStudent(SqlDataReader reader) 
         {
             int studentNumber = (int)reader["StudentNumber"];
@@ -56,7 +79,7 @@ namespace SomerenApp.Repositories
                                 "ORDER BY LastName ASC";
 
                 SqlCommand command = new SqlCommand(query, connection);
-                
+
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
@@ -74,8 +97,7 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"SELECT StudentNumber, FirstName, LastName, TelephoneNumber, ClassName, RoomId FROM students " +
-                              "WHERE StudentNumber = @StudentNumber";
+                string query = $"SELECT StudentNumber, FirstName, LastName, TelephoneNumber, ClassName, RoomId FROM students WHERE StudentNumber = @StudentNumber";
 
                 SqlCommand command = new SqlCommand(query, connection);
 
@@ -100,19 +122,34 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"UPDATE students SET FirstName = @Firstname, LastName = @LastName, " +
+                //zorgt ervoor dat de RoomId geldig is bij een update
+                string checkRoomQuery = "SELECT COUNT(*) FROM Rooms WHERE RoomId = @RoomId";
+                SqlCommand checkRoomCommand = new SqlCommand(checkRoomQuery, connection);
+                checkRoomCommand.Parameters.AddWithValue("RoomId", student.RoomId);
+
+                connection.Open();
+                int roomCount = (int)checkRoomCommand.ExecuteScalar();
+
+                if (roomCount == 0)
+                {
+                    throw new Exception($"The RoomId {student.RoomId} does not exist");
+
+                }
+
+                //Update query
+                string query = $"UPDATE students SET FirstName = @FirstName, LastName = @LastName, " +
                                 "TelephoneNumber = @TelephoneNumber, ClassName = @ClassName, " +
                                 "RoomId = @RoomId WHERE StudentNumber = @StudentNumber";
+                                
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@StudentNumber", student.StudentNumber);
                 command.Parameters.AddWithValue("@FirstName", student.FirstName);
-                command.Parameters.AddWithValue("@Lastname", student.LastName);
+                command.Parameters.AddWithValue("@LastName", student.LastName);
                 command.Parameters.AddWithValue("@TelephoneNumber", student.TelephoneNumber);
                 command.Parameters.AddWithValue("@ClassName", student.ClassName);
                 command.Parameters.AddWithValue("@RoomId", student.RoomId);
 
-                command.Connection.Open();
                 int nrOfRowsAffected = command.ExecuteNonQuery();
                 if (nrOfRowsAffected == 0)
                 {
@@ -125,12 +162,24 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                //zorgt ervoor dat de RoomId geldig is bij een update
+                string checkRoomQuery = "SELECT COUNT(*) FROM Rooms WHERE RoomId = @RoomId";
+                SqlCommand checkRoomCommand = new SqlCommand(checkRoomQuery, connection);
+                checkRoomCommand.Parameters.AddWithValue("RoomId", student.RoomId);
+
+                connection.Open();
+                int roomCount = (int)checkRoomCommand.ExecuteScalar();
+
+                if (roomCount == 0)
+                {
+                    throw new Exception($"The RoomId {student.RoomId} does not exist");
+
+                }
                 string query = $"DELETE FROM students WHERE StudentNumber = @StudentNumber";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@StudentNumber", student.StudentNumber);
 
-                command.Connection.Open();
                 int nrOfRowsAffected = command.ExecuteNonQuery();
                 if (nrOfRowsAffected == 0)
                 {

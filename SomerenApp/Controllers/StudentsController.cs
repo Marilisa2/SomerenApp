@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using SomerenApp.Models;
 using SomerenApp.Repositories;
 
@@ -31,16 +32,23 @@ namespace SomerenApp.Controllers
         {
             try
             {
+                //haalt de eerste beschikbare RoomId uit de Room-tabel
+                int roomId = _studentsRepository.GetAvailableRoomId();
+
+
+                //koppel gevonden RoomId aan student
+                student.RoomId = roomId;
+
                 _studentsRepository.Add(student);
 
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                ViewData["ErrorMessage"] = ex.Message;
                 return View(student);
             }
         }
+
 
         //Edit
         [HttpGet]
@@ -58,6 +66,13 @@ namespace SomerenApp.Controllers
         {
             try
             {
+                //haalt de eerste beschikbare RoomId uit de Room-tabel
+                int roomId = _studentsRepository.GetAvailableRoomId();
+
+
+                //koppel gevonden RoomId aan student
+                student.RoomId = roomId;
+
                 _studentsRepository.Update(student);
 
                 return RedirectToAction("Index");
@@ -84,6 +99,13 @@ namespace SomerenApp.Controllers
         {
             try
             {
+                //haalt de eerste beschikbare RoomId uit de Room-tabel
+                int roomId = _studentsRepository.GetAvailableRoomId();
+
+                //koppel gevonden RoomId aan student
+                student.RoomId = roomId;
+
+
                 _studentsRepository.Delete(student);
 
                 return RedirectToAction("Index");

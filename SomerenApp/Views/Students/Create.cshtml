@@ -1,10 +1,7 @@
-﻿
-@model SomerenApp.Models.Student
+﻿@model SomerenApp.Models.Student
 @{
 	ViewData["Title"] = "Create Student";
-	string? errorMessage = (string)ViewData["ErrorMessage"];
 }
-<h4>@errorMessage</h4>
 
 <h4 class="text-primary">New Student</h4>
 <form action="/Students/Create" method="POST">

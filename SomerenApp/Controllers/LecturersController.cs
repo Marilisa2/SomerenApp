@@ -20,8 +20,16 @@ new Lecturer("Tanenbaum", "Andrew", 75, "020 1234567"),
 new Lecturer("Stein", "Clifford", 60, "020 1234567"),
                 ];*/
 
-            List<Lecturer> lecturers = _lecturersRepository.GetAllLecturers();
-            return View(lecturers);
+            try
+            {
+                List<Lecturer> lecturers = _lecturersRepository.GetAllLecturers();
+                return View(lecturers);
+            }
+            catch 
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
         public ActionResult Create()
         {
@@ -37,6 +45,7 @@ new Lecturer("Stein", "Clifford", 60, "020 1234567"),
             }
             catch (Exception ex)
             {
+                ViewData["ErrorMessage"] = ex.Message;
                 return View(lecturer);
             }
         }
@@ -60,6 +69,7 @@ new Lecturer("Stein", "Clifford", 60, "020 1234567"),
             }
             catch (Exception ex)
             {
+                ViewData["ErrorMessage"] = ex.Message;
                 return View(lecturer);
             }
         }
@@ -83,6 +93,7 @@ new Lecturer("Stein", "Clifford", 60, "020 1234567"),
             }
             catch (Exception ex)
             {
+                ViewData["ErrorMessage"] = ex.Message;
                 return View(lecturer);
             }
         }
