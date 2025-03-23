@@ -69,9 +69,6 @@ namespace SomerenApp.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex.Message);
-                //ViewData["ErrorMessage"] = ex.Message;
-                return View(room);
-
             }
 
             return View(room);
