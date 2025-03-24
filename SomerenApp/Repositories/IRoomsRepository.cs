@@ -6,12 +6,12 @@ namespace SomerenApp.Repositories
     public interface IRoomsRepository
     {
         List<Room> GetAllRooms();
-        Room? GetByID(int roomId); //specifieke room
+        Room? GetByID(int roomId); //specific room
         void Add(Room room);
         void Update(Room room);
         void Delete(Room room);
 
-        //methode om kamers te filteren op basis va het aantal bedden
+        //method to filter rooms based on the number of beds/ roomsize
         List<Room> GetRoomsBySize(string roomSize);
     }
 }

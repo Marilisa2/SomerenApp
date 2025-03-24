@@ -14,7 +14,6 @@ namespace SomerenApp.Repositories
 
         public void Add(Room room)
         {
-            //toevoegen
             throw new NotImplementedException();
         }
 

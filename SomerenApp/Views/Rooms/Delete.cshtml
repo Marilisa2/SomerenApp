@@ -11,24 +11,24 @@
     @*RoomNumber*@
     <div class="form-group py-2 mt-2 d-block">
         <label for="RoomNumber">Roomnumber: </label>
-        <input type="text" id="RoomNumber" name="RoomNumber" class="form-control mt-2 d-block" required value="@Model?.RoomNumber" readonly/> @*readonly zorgt ervoor dat je dit niet kan aanpassen*@
+        <input type="text" id="RoomNumber" name="RoomNumber" class="form-control mt-2 d-block" required value="@Model?.RoomNumber" readonly/> @*readonly ensures that you cannot change/modify this*@
     </div>
 
     @*RoomSize*@
     <div class="form-group py-2">
         <label for="RoomSize">Roomsize: </label>
         <select name="RoomSize" id="RoomSize" class="form-control mt-2 d-block" disabled>
-            <option value="Single Room - GF" selected="@Model.RoomSize == " Single Room - GF">Single Room - GF</option> @*kamer voor docenten*@
-            <option value="Dormitory - 8 beds" selected="@Model.RoomSize == " Dormitory - 8 beds">Dormitory - 8 beds</option> @*kamer voor studenten*@
+            <option value="Single Room - GF" selected="@Model?.RoomSize == " Single Room - GF">Single Room - GF</option> @*room for lecturer*@
+            <option value="Dormitory - 8 beds" selected="@Model?.RoomSize == " Dormitory - 8 beds">Dormitory - 8 beds</option> @*room for student*@
         </select>
     </div>
 
     @*RoomType*@  
     <div class="form-group py-2">
-        <label for="RoomType">RoomType: </label>
+        <label for="RoomType">Roomtype: </label>
         <select name="RoomType" id="RoomType" class="form-control mt-2 d-block" disabled>
-            <option value="Lecturer" selected="@Model.RoomType == " Lecturer">Lecturer</option> @*Docent*@
-            <option value="Student" selected="@Model.RoomType == " Student">Student</option> @*Student*@
+            <option value="Lecturer" selected="@Model?.RoomType == " Lecturer">Lecturer</option> @*lecturer*@
+            <option value="Student" selected="@Model?.RoomType == " Student">Student</option> @*student*@
         </select>
     </div>
 
@@ -36,8 +36,8 @@
     <div class="form-group py-2">
         <label for="Building">Building: </label>
         <select name="Building" id="Building" class="form-control mt-2 d-block" disabled>
-            <option value="A" selected="@Model.Building == "A">A</option> @*gebouw A*@
-            <option value="B" selected="@Model.Building == "B">B</option> @*gebouw B*@
+            <option value="A" selected="@Model?.Building == "A">A</option> @*building A*@
+            <option value="B" selected="@Model?.Building == "B">B</option> @*building B*@
         </select>
     </div>
 
@@ -47,8 +47,17 @@
 </form>
 
 <style>
-    a, h4 {
+    body {
+        font-family: 'Aptos', 'sans-serif';
+        font-size: 18px;
+    }
+
+    a, h4{
         color: #585FD6;
+    }
+
+    a:hover{
+        color: #000000;
     }
 
     button {

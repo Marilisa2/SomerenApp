@@ -21,7 +21,7 @@ namespace SomerenApp.Repositories
             string roomNumber = (string)reader["RoomNumber"];
             string roomSize = (string)reader["RoomSize"];
 
-            //enum RoomType omzetten naar string want heeft datatype string in database
+            //converting enum RoomType to string because it has datatype string in database
             string roomTypeString = reader["RoomType"].ToString();
 
             if (!Enum.TryParse<RoomType>(roomTypeString, out var roomType))
@@ -87,7 +87,7 @@ namespace SomerenApp.Repositories
             {
                 try
                 {
-                    //controleren of er een room bestaat met dezelfde RoomNumber
+                    //checks if there exists a room with the same RoomNumber
                     string checkQuery = "SELECT COUNT(*) FROM Rooms WHERE RoomNumber = @RoomNumber";
                     SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
                     checkCommand.Parameters.AddWithValue("@RoomNumber", room.RoomNumber);
@@ -97,7 +97,7 @@ namespace SomerenApp.Repositories
 
                     if (existingRoomCount > 0)
                     {
-                        //als kamer met gegeven RoomNumber bestaat geeft het een foutmelding
+                        //if a room with the given RoomNumber exists it gives an error message
                         throw new Exception($"A room with the number '{room.RoomNumber}' already exists. ");
                     }
 
@@ -112,7 +112,7 @@ namespace SomerenApp.Repositories
                     command.Parameters.AddWithValue("@Building", room.Building);
 
                     
-                    room.RoomId = Convert.ToInt32(command.ExecuteScalar()); //haalt de RoomNumber op
+                    room.RoomId = Convert.ToInt32(command.ExecuteScalar()); //retrieves the RoomNumber
                 }
                 catch (Exception ex)
                 { 
@@ -163,7 +163,7 @@ namespace SomerenApp.Repositories
 
         }
 
-        //methode om rooms te filteren op basis van aantal bedden
+        //method to filter rooms based on the number of beds/ roomsize
         public List<Room> GetRoomsBySize(string roomSize)
         {
             List<Room> rooms = new List<Room>();
