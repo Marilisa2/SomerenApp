@@ -78,14 +78,14 @@ namespace SomerenApp.Repositories
                 command.Connection.Open();
                 lecturer.LecturerNumber = Convert.ToInt32(command.ExecuteScalar());
 
-                string checkRoomQuery = "SELECT COUNT(*) FROM rooms WHERE RoomId = @RoomId";
+                /*string checkRoomQuery = "SELECT COUNT(*) FROM rooms WHERE RoomId = @RoomId";
                 SqlCommand checkRoomCommand = new SqlCommand(checkRoomQuery, connection);
                 checkRoomCommand.Parameters.AddWithValue("@RoomId", lecturer.RoomId);
                 int roomCount = (int)checkRoomCommand.ExecuteScalar();
                 if (roomCount == 0 )
                 {
                     throw new Exception($"The RoomId {lecturer.RoomId} does not exist.");
-                }
+                }*/
             }
         }
 
