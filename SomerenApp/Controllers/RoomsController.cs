@@ -54,7 +54,7 @@ namespace SomerenApp.Controllers
                 {
                     if (_roomsRepository.GetAllRooms().Any(x => x.RoomNumber == room.RoomNumber))
                     {
-                        //foutmelding toevoegen aan ViewData als kamernummer als bestaat
+                        //adding error message to ViewData if RoomNumber already exists
                         ViewData["ErrorMessage"] = "This room number already exists.";
                     }
 
@@ -138,7 +138,5 @@ namespace SomerenApp.Controllers
                 return View(room);
             }
         }
-
-
     }
 }
