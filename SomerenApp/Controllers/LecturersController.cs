@@ -40,6 +40,8 @@ new Lecturer("Stein", "Clifford", 60, "020 1234567"),
         {
             try
             {
+                /*int roomId = _lecturersRepository.GetAvailableRoomId();
+                lecturer.RoomId = roomId;*/
                 _lecturersRepository.AddLecturer(lecturer);
                 return RedirectToAction("Index");
             }
@@ -56,8 +58,16 @@ new Lecturer("Stein", "Clifford", 60, "020 1234567"),
             {
                 return NotFound();
             }
-            Lecturer? lecturer = _lecturersRepository.GetLecturerByID((int)id);
-            return View(lecturer);
+            try 
+            { 
+                Lecturer? lecturer = _lecturersRepository.GetLecturerByID((int)id);
+                return View(lecturer);
+            }
+            catch
+            {
+                throw new Exception("Given lecturer ID does not exist.");
+            }
+            
         }
         [HttpPost]
         public ActionResult Delete(Lecturer lecturer)
@@ -80,8 +90,16 @@ new Lecturer("Stein", "Clifford", 60, "020 1234567"),
             {
                 return NotFound();
             }
-            Lecturer? lecturer = _lecturersRepository.GetLecturerByID((int)id);
-            return View(lecturer);
+            try
+            {
+                Lecturer? lecturer = _lecturersRepository.GetLecturerByID((int)id);
+                return View(lecturer);
+            }
+            catch
+            {
+                throw new Exception("Given lecturer ID does not exist.");
+            }
+            
         }
         [HttpPost]
         public ActionResult Edit(Lecturer lecturer)

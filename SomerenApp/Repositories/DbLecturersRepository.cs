@@ -17,7 +17,7 @@ namespace SomerenApp.Repositories
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT lecturerNumber, firstName, lastName, age, phoneNumber, roomId FROM lecturers ORDER BY lastName";
+                string query = "SELECT lecturerNumber, firstName, lastName, age, phoneNumber FROM lecturers ORDER BY lastName";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Connection.Open();
@@ -38,8 +38,8 @@ namespace SomerenApp.Repositories
             string lastName = (string)reader["lastName"];
             byte age = (byte)reader["age"];
             string phoneNumber = (string)reader["phoneNumber"];
-            int roomId = (int)reader["roomId"];
-            return new Lecturer(lecturerNumber, firstName, lastName,  age, phoneNumber, roomId);
+            //int roomId = (int)reader["roomId"];
+            return new Lecturer(lecturerNumber, firstName, lastName,  age, phoneNumber);
         }
         public Lecturer? GetLecturerByID(int lecturerNumber)
         {
@@ -66,17 +66,26 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"INSERT INTO lecturers (firstName, lastName, age, phoneNumber, roomId)" +
-                    "VALUES(@FirstName, @LastName, @Age, @PhoneNumber, @RoomId); " +
+                string query = $"INSERT INTO lecturers (firstName, lastName, age, phoneNumber)" +
+                    "VALUES(@FirstName, @LastName, @Age, @PhoneNumber); " +
                     "SELECT SCOPE_IDENTITY();";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@FirstName", lecturer.FirstName);
                 command.Parameters.AddWithValue("@LastName", lecturer.LastName);
                 command.Parameters.AddWithValue("@Age", lecturer.Age);
                 command.Parameters.AddWithValue("@PhoneNumber", lecturer.PhoneNumber);
-                command.Parameters.AddWithValue("@RoomId", lecturer.RoomId);
+                //command.Parameters.AddWithValue("@RoomId", lecturer.RoomId);
                 command.Connection.Open();
                 lecturer.LecturerNumber = Convert.ToInt32(command.ExecuteScalar());
+
+                string checkRoomQuery = "SELECT COUNT(*) FROM rooms WHERE RoomId = @RoomId";
+                SqlCommand checkRoomCommand = new SqlCommand(checkRoomQuery, connection);
+                checkRoomCommand.Parameters.AddWithValue("@RoomId", lecturer.RoomId);
+                int roomCount = (int)checkRoomCommand.ExecuteScalar();
+                if (roomCount == 0 )
+                {
+                    throw new Exception($"The RoomId {lecturer.RoomId} does not exist.");
+                }
             }
         }
 
@@ -85,14 +94,14 @@ namespace SomerenApp.Repositories
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = $"UPDATE lecturers SET firstName = @FirstName, lastName = @LastName, " +
-                    "age = @Age, phoneNumber = @PhoneNumber, roomId = @RoomId WHERE lecturerNumber = @LecturerNumber";
+                    "age = @Age, phoneNumber = @PhoneNumber WHERE lecturerNumber = @LecturerNumber";//, roomId = @RoomId
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@FirstName", lecturer.FirstName);
                 command.Parameters.AddWithValue("@LastName", lecturer.LastName);
                 command.Parameters.AddWithValue("@Age", lecturer.Age);
                 command.Parameters.AddWithValue("@PhoneNumber", lecturer.PhoneNumber);
                 command.Parameters.AddWithValue("@LecturerNumber", lecturer.LecturerNumber);
-                command.Parameters.AddWithValue("@RoomId", lecturer.RoomId);
+                //command.Parameters.AddWithValue("@RoomId", lecturer.RoomId);
                 command.Connection.Open();
 
                 int nrofRowsAffected = command.ExecuteNonQuery();
@@ -118,5 +127,16 @@ namespace SomerenApp.Repositories
                 }
             }
         }
+
+        /*public int GetAvailableRoomId()
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+                string querie = "SELECT TOP 1 roomId FROM rooms WHERE RoomType='Lecturer'";
+                SqlCommand command = new SqlCommand(querie, sqlConnection);
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
+        }*/
     }
 }
