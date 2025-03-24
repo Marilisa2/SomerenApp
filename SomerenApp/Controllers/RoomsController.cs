@@ -17,6 +17,7 @@ namespace SomerenApp.Controllers
 
         //public RoomsController()
         //{
+               //dummyRoomsRepository
         //    _roomsRepository = new DummyRoomsRepository();
         //}
 
