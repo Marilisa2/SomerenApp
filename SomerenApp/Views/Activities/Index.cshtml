@@ -1,0 +1,37 @@
+﻿@model List<SomerenApp.Models.Activity>
+@{
+    ViewData["Title"] = "Activity";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Activity</h1>
+    <a href="/Activities/Create">Create New Activity</a>
+    
+    <table class="table table-bordered hover">
+        <thead>
+            <tr>
+                <th>Activity Name</th>
+                <th>Activity Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                foreach (var activity in Model)
+                {
+                    <tr>
+                        <td>@activity.ActivityType.ToString()</td>
+                        <td>@activity.ActivityDate.ToString()</td>
+            
+                        <td>
+                            <a href="/Activities/Edit/@activity.ActivityNumber" class="link">Edit</a> |
+                            <a href="/Activities/Delete/@activity.ActivityNumber" class="link">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

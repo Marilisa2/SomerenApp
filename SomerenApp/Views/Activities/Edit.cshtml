@@ -1,0 +1,35 @@
+﻿@model SomerenApp.Models.Activity
+
+@{
+    ViewData["Title"] = "Edit Activity";
+}
+
+<h4>Edit Activity</h4>
+<form action="/Activities/Edit" method="POST">
+    <input hidden type="number" name="ActivityNumber" value="@Model?.ActivityNumber" />
+
+    <div class="form-group py-2">
+        <label for="ActivityType">Activity Name:</label>
+        <select name="ActivityType" id="ActivityType" class="form-control mt-2 d-block">
+            <option value=""> - Select a Activity - </option>
+            <option value="SoccerTournament" selected="@Model?.ActivityType == " SoccerTournament">SoccerTournament</option>
+            <option value="PuzzleQuest" selected="@Model?.ActivityType == " PuzzleQuest">PuzzleQuest</option>
+            <option value="ObstacleCourse" selected="@Model?.ActivityType == " ObstacleCourse">ObstacleCourse</option>
+        </select>
+    </div>
+
+    <div class="form-group py-2">
+        <label for="ActivityDate">Activity Date:</label>
+        <select name="ActivityDate" id="ActivityDate" class="form-control mt-2 d-block">
+            <option value=""> - Select a ActivityDate - </option>
+            <option value="MondayAfternoon" selected="@Model?.ActivityDate == " MondayAfternoon">MondayAfternoon</option>
+            <option value="TuesdayMorning" selected="@Model?.ActivityDate == " TuesdayMorning">TuesdayMorning</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-info">Save</button>
+
+</form>
+
+<a href="/Activities/Index">Back to List</a>
+
