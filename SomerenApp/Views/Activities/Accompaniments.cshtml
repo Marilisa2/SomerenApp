@@ -1,4 +1,4 @@
-﻿@model List<SomerenApp.Models.Lecturer>
+﻿@model SomerenApp.Models.Accompaniment
 @{
 	ViewData["Title"] = "Accompaniments";
 }
@@ -7,37 +7,54 @@
 	<a href="Activities/Index">Go back to activities</a>
 </div>
 <form action="/Lecturers/Accompaniments" method="POST">
-<table class="table table-hover">
-	<thead class="table-dark">
-		<tr>
-			<th>Last name</th>
-			<th>First name</th>
-			<th>Age</th>
-			<th>Phone number</th>
-			<th>Accompanies this activity?</th>
-		</tr>
-	</thead>
-	<tbody class="bg-opacity-10 bg-black">
-		@{
-			foreach (Lecturer lecturer in Model)
-			{
-				<tr>
-					<td>@lecturer.LastName</td>
-					<td>@lecturer.FirstName</td>
-					<td>@lecturer.Age</td>
-					<td>@lecturer.PhoneNumber</td>
+	<table class="table table-hover">
+		<thead class="table-dark">
+			<tr>
+				<th>Last name</th>
+				<th>First name</th>
+				<th>Age</th>
+				<th>Phone number</th>
+				<th>Accompanies this activity</th>
+			</tr>
+		</thead>
+		<tbody class="bg-opacity-10 bg-black">
+			@{
+				foreach (Lecturer lecturer in Model.Supervisors)
+				{
+					<tr>
+						<td>@lecturer.LastName</td>
+						<td>@lecturer.FirstName</td>
+						<td>@lecturer.Age</td>
+						<td>@lecturer.PhoneNumber</td>
 						<td>
 							<label for="accompany">Does this lecturer accompany this activity?</label>
 							<select name="accompany" id="accompany">
 								<option value="false">false</option>
 								<option value="true">true</option>
 							</select>
-							<input type="submit" value="Submit"/>
+							<input type="submit" value="Submit" />
 						</td>
-				</tr>
+					</tr>
+				}
+				foreach (Lecturer lecturer in Model.NonSupervisors)
+				{
+					<tr>
+						<td>@lecturer.LastName</td>
+						<td>@lecturer.FirstName</td>
+						<td>@lecturer.Age</td>
+						<td>@lecturer.PhoneNumber</td>
+						<td>
+							<label for="accompany">Does this lecturer accompany this activity?</label>
+							<select name="accompany" id="accompany">
+								<option value="false">false</option>
+								<option value="true">true</option>
+							</select>
+							<input type="submit" value="Submit" />
+						</td>
+					</tr>
+				}
 			}
-		}
-			<input type="submit all" />
-	</tbody>
-</table>
+			<input type="submit" value="" />
+		</tbody>
+	</table>
 </form>

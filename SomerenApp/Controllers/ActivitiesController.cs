@@ -9,10 +9,12 @@ namespace SomerenApp.Controllers
     public class ActivitiesController : Controller
     {
         private readonly IActivitiesRepository _activitiesRepository;
+        private readonly ILecturersRepository _lecturersRepository;
 
-        public ActivitiesController(IActivitiesRepository activities)
+        public ActivitiesController(IActivitiesRepository activities, ILecturersRepository lecturersRepository)
         {
             _activitiesRepository = activities;
+            _lecturersRepository = lecturersRepository;
         }
         
 
@@ -128,6 +130,13 @@ namespace SomerenApp.Controllers
             }
             try
             {
+                Models.Activity activity = _activitiesRepository.GetByID((int)activityNumber);
+
+                List<Lecturer> supervisors = _activitiesRepository.GetSupervisors(activity.ActivityNumber);
+                List<Lecturer> nonSupervisors = _activitiesRepository.GetNonSupervisors(activity.ActivityNumber);
+
+                Accompaniment accompaniment = new Accompaniment(activity, supervisors, nonSupervisors);
+
                 Dictionary<Lecturer, bool> accompanimentsDictionary;
                 return RedirectToAction("Index");
             }
@@ -138,17 +147,17 @@ namespace SomerenApp.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Accompaniments(Dictionary<Lecturer, bool> accompanimentsDictionary)
+        public ActionResult Accompaniments(Accompaniment accompaniment)
         {
             try
             {
-                _activitiesRepository.UpdateAccompaniments(accompanimentsDictionary);
+                _activitiesRepository.UpdateAccompaniments(accompaniment);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 ViewData["ErrorMessage"] = ex.Message;
-                return View(accompanimentsDictionary);
+                return View(accompaniment);
             }
         }
     }

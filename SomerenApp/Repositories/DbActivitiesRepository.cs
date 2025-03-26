@@ -147,13 +147,20 @@ namespace SomerenApp.Repositories
                 }
             }
         }
-        //Show all lecturers who accompany the given activity.
-        public List<Lecturer> LecturersAccompanying(int activityNumber)
+        public List<Lecturer> GetSupervisors(int activityNumber)
         {
-            List<Lecturer> accompanyingLecturers = new List<Lecturer>();
+            return AddLecturersToList("SELECT * FROM lecturers WHERE lecturerNumber NOT IN  (SELECT lecturerNumber FROM accompaniments WHERE activityNumber = @ActivityNumber;);", activityNumber);
+        }
+        public List<Lecturer> GetNonSupervisors(int activityNumber)
+        {
+            return AddLecturersToList("SELECT lecturerNumber FROM accompaniments WHERE @ActivityNumber = @ActivityNumber;", activityNumber);
+        }
+        public List<Lecturer> AddLecturersToList(string query, int activityNumber)
+        {
+            List<Lecturer> lecturers = new List<Lecturer>();
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT lecturerNumber FROM accompaniments WHERE @ActivityNumber = @ActivityNumber;";
+                
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@ActivityNumber", activityNumber);
                 command.Connection.Open();
@@ -162,49 +169,15 @@ namespace SomerenApp.Repositories
                 while (reader.Read())
                 {
                     Lecturer lecturer = DbLecturersRepository.ReadLecturer(reader);
-                    accompanyingLecturers.Add(lecturer);
+                    lecturers.Add(lecturer);
                 }
             }
-            return accompanyingLecturers;
+            return lecturers;
         }
 
-        //Show all lecturers who don't accompany the given activity.
-        public List<Lecturer> LecturersNotAccompanying(int activityNumber)
+        public void UpdateAccompaniments(Accompaniment accompaniment)
         {
-            List<Lecturer> notAccompanyingLecturers = new List<Lecturer>();
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                string query = "SELECT lecturerName FROM lecturers WHERE lecturerNumber NOT IN  (SELECT lecturerNumber FROM accompaniments WHERE activityNumber = @ActivityNumber;);";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@ActivityNumber", activityNumber);
-                command.Connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    Lecturer lecturer = DbLecturersRepository.ReadLecturer(reader);
-                    notAccompanyingLecturers.Add(lecturer);
-                }
-            }
-            return notAccompanyingLecturers;
-        }
-        public Dictionary<Lecturer, bool> DoesLecturerAccompany(int activityNumber)
-        {
-            Dictionary<Lecturer, bool> accompanimentsDictionary = new Dictionary<Lecturer, bool>();
-            foreach (Lecturer lecturer in LecturersNotAccompanying(activityNumber))
-            {
-                accompanimentsDictionary.Add(lecturer, false);
-            }
-            foreach (Lecturer lecturer in LecturersAccompanying(activityNumber))
-            {
-                accompanimentsDictionary.Add(lecturer, true);
-            }
-            return accompanimentsDictionary;
-        }
-
-        public void UpdateAccompaniments(Dictionary<Lecturer, bool> accompanimentsDictionary)
-        {
-            throw new NotImplementedException();
+            
         }
 
     }
