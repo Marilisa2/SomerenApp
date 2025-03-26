@@ -132,8 +132,8 @@ namespace SomerenApp.Controllers
             {
                 Models.Activity activity = _activitiesRepository.GetByID((int)activityNumber);
 
-                List<Lecturer> supervisors = _activitiesRepository.GetSupervisors(activity.ActivityNumber);
-                List<Lecturer> nonSupervisors = _activitiesRepository.GetNonSupervisors(activity.ActivityNumber);
+                List<Lecturer> supervisors = _lecturersRepository.GetSupervisors(activity.ActivityNumber);
+                List<Lecturer> nonSupervisors = _lecturersRepository.GetNonSupervisors(activity.ActivityNumber);
 
                 Accompaniment accompaniment = new Accompaniment(activity, supervisors, nonSupervisors);
 
@@ -147,17 +147,17 @@ namespace SomerenApp.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Accompaniments(Accompaniment accompaniment)
+        public ActionResult Accompaniments(int activityNumber, int lecturerNumber)
         {
             try
             {
-                _activitiesRepository.UpdateAccompaniments(accompaniment);
+                _lecturersRepository.RemoveSuperVisor(activityNumber, lecturerNumber);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 ViewData["ErrorMessage"] = ex.Message;
-                return View(accompaniment);
+                return View("Index");
             }
         }
     }

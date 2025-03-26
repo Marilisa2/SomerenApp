@@ -10,8 +10,5 @@ namespace SomerenApp.Repositories
         void Add(Activity activity);
         void Update(Activity activity);
         void Delete(Activity activity);
-        void UpdateAccompaniments(Accompaniment accompaniment);
-        List <Lecturer> GetSupervisors(int activityNumber);
-        List<Lecturer> GetNonSupervisors(int activityNumber);
     }
 }

@@ -128,6 +128,43 @@ namespace SomerenApp.Repositories
                 }
             }
         }
+        public List<Lecturer> GetSupervisors(int activityNumber)
+        {
+            return AddLecturersToActivityList("SELECT * FROM lecturers WHERE lecturerNumber NOT IN  (SELECT lecturerNumber FROM accompaniments WHERE activityNumber = @ActivityNumber;);", activityNumber);
+        }
+        public List<Lecturer> GetNonSupervisors(int activityNumber)
+        {
+            return AddLecturersToActivityList("SELECT lecturerNumber FROM accompaniments WHERE @ActivityNumber = @ActivityNumber;", activityNumber);
+        }
+        public List<Lecturer> AddLecturersToActivityList(string query, int activityNumber)
+        {
+            List<Lecturer> lecturers = new List<Lecturer>();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@ActivityNumber", activityNumber);
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Lecturer lecturer = ReadLecturer(reader);
+                    lecturers.Add(lecturer);
+                }
+            }
+            return lecturers;
+        }
+
+        public void RemoveSuperVisor(int activityNumber, int lecturerNumber)
+        {
+
+        }
+        public void AddSuperVisor(int activityNumber, int lecturerNumber)
+        {
+
+        }
+
         /*public int GetAvailableRoomId()
 {
    using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
