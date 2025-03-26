@@ -119,5 +119,37 @@ namespace SomerenApp.Controllers
                 return View(activity);
             }
         }
+        [HttpGet]
+        public ActionResult Accompaniments(int? activityNumber)
+        {
+            if (activityNumber == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                Dictionary<Lecturer, bool> accompanimentsDictionary;
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                return View(activityNumber);
+            }
+        }
+        [HttpPost]
+        public ActionResult Accompaniments(Dictionary<Lecturer, bool> accompanimentsDictionary)
+        {
+            try
+            {
+                _activitiesRepository.UpdateAccompaniments(accompanimentsDictionary);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                return View(accompanimentsDictionary);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using SomerenApp.Models;
 using System.Data;
+using System.Diagnostics;
 
 namespace SomerenApp.Repositories
 {
@@ -127,16 +128,15 @@ namespace SomerenApp.Repositories
                 }
             }
         }
-
         /*public int GetAvailableRoomId()
-        {
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
-            {
-                sqlConnection.Open();
-                string querie = "SELECT TOP 1 roomId FROM rooms WHERE RoomType='Lecturer'";
-                SqlCommand command = new SqlCommand(querie, sqlConnection);
-                return Convert.ToInt32(command.ExecuteScalar());
-            }
-        }*/
+{
+   using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+   {
+       sqlConnection.Open();
+       string querie = "SELECT TOP 1 roomId FROM rooms WHERE RoomType='Lecturer'";
+       SqlCommand command = new SqlCommand(querie, sqlConnection);
+       return Convert.ToInt32(command.ExecuteScalar());
+   }
+}*/
     }
 }

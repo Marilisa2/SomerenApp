@@ -9,6 +9,8 @@ namespace SomerenApp.Repositories
         void AddLecturer(Lecturer lecturer);
         void EditLecturer(Lecturer lecturer);
         void DeleteLecturer(Lecturer lecturer);
+
+
         //int GetAvailableRoomId();
     }
 }

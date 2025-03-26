@@ -10,5 +10,8 @@ namespace SomerenApp.Repositories
         void Add(Activity activity);
         void Update(Activity activity);
         void Delete(Activity activity);
+        List<Lecturer> LecturersAccompanying(int activityNumber);
+        List<Lecturer> LecturersNotAccompanying(int activityNumber);
+        void UpdateAccompaniments(Dictionary<Lecturer, bool> accompanimentsDictionary);
     }
 }
