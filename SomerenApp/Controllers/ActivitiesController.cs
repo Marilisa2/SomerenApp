@@ -9,10 +9,12 @@ namespace SomerenApp.Controllers
     public class ActivitiesController : Controller
     {
         private readonly IActivitiesRepository _activitiesRepository;
+        private readonly ILecturersRepository _lecturersRepository;
 
-        public ActivitiesController(IActivitiesRepository activities)
+        public ActivitiesController(IActivitiesRepository activities, ILecturersRepository lecturersRepository)
         {
             _activitiesRepository = activities;
+            _lecturersRepository = lecturersRepository;
         }
         
 
@@ -117,6 +119,45 @@ namespace SomerenApp.Controllers
             {
                 //something's wrong go back to view which activity
                 return View(activity);
+            }
+        }
+        [HttpGet]
+        public ActionResult Accompaniments(int? activityNumber)
+        {
+            if (activityNumber == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                Models.Activity activity = _activitiesRepository.GetByID((int)activityNumber);
+
+                List<Lecturer> supervisors = _lecturersRepository.GetSupervisors(activity.ActivityNumber);
+                List<Lecturer> nonSupervisors = _lecturersRepository.GetNonSupervisors(activity.ActivityNumber);
+
+                Accompaniment accompaniment = new Accompaniment(activity, supervisors, nonSupervisors);
+
+                Dictionary<Lecturer, bool> accompanimentsDictionary;
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                return View(activityNumber);
+            }
+        }
+        [HttpPost]
+        public ActionResult Accompaniments(int activityNumber, int lecturerNumber)
+        {
+            try
+            {
+                _lecturersRepository.RemoveSuperVisor(activityNumber, lecturerNumber);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                return View("Index");
             }
         }
     }
