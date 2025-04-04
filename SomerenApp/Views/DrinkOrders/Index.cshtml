@@ -31,19 +31,20 @@
 <!--Menu List-->
 
 <form asp-action="Create" method="POST" class="form">
-	<h4 Class="TextOrder">Place Your Order</h4>
+	<h3 Class="TextOrder pb-2">Place Your Order</h3>
 
-	<div class="form-group py-2">
+	<div class="form-group py-3">
 		<label for="StudentNumber">Select Student:</label>
 		<select id="StudentNumber" name="StudentNumber" class="form-control borderColor" required>
+			<option value="" disabled selected>~Choose your student~</option>
 			@foreach (var student in Model.Students)
 			{
-				<option value="@student.StudentNumber">@student.FirstName, @student.LastName</option>
+				<option value="@student.StudentNumber">@student.FirstName @student.LastName</option>
 			}
 		</select>
 	</div>
 
-	<div class="form-group py-2">
+	<div class="form-group py-3">
 		<label for="DrinkId">Select Drink:</label>
 		<select id="DrinkId" name="DrinkId" class="form-control borderColor" required>
 			@foreach (var student in Model.Drinks)
@@ -53,7 +54,7 @@
 		</select>
 	</div>
 
-	<div class="form-group py-2">
+	<div class="form-group py-3">
 		<label for="Count">Amount of drinks:</label>
 		<input type="number" id="Count" name="Count" min="1" class="form-control borderColor" required/>
 	</div>
@@ -67,17 +68,24 @@
 	}
 	.form{
 		background-color: aliceblue;
-		padding: 25px;
+		padding: 40px;
 		width: 50%;
-		margin: 8px auto;
+		margin: 15px auto;
 		border-radius: 5px;
 	}
 	.form-group{
-		margin: 10px;
+		margin: 11px;
 	}
 	.TextOrder{
 		color: #2A7CB3;
 		text-align: center;
+	}
+
+	option[disabled] {
+		color: grey;
+	}
+	selected {
+		color: black;
 	}
 	.btn{
 		background-color: #2A7CB3;
