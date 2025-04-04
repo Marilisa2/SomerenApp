@@ -21,13 +21,13 @@ namespace SomerenApp.Controllers
         //    _roomsRepository = new DummyRoomsRepository();
         //}
 
-        public IActionResult Index(string? roomsize)
+        public IActionResult Index(string? roomSize)
         {
             List<Room> rooms;
 
-            if (!string.IsNullOrEmpty(roomsize) && roomsize != "All")
+            if (!string.IsNullOrEmpty(roomSize) && roomSize != "All")
             {
-                rooms = _roomsRepository.GetRoomsBySize(roomsize);
+                rooms = _roomsRepository.GetRoomsBySize(roomSize);
             }
             else 
             {

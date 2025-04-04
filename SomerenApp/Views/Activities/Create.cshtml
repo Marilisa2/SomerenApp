@@ -1,0 +1,44 @@
+﻿@model SomerenApp.Models.Activity
+
+@{
+    ViewData["Title"] = "Create Activity";
+}
+
+
+<h4>Create Activity</h4>
+<form action="/Activities/Create" method="POST">
+    
+
+    <div class="form-group py-2">
+        <label for="ActivityType">Activity Name:</label>
+        <select name="ActivityType" id="ActivityType" class="form-control mt-2 d-block">
+            <option value=""> - Select a Activity - </option>
+            <option value="SoccerTournament">SoccerTournament</option>
+            <option value="PuzzleQuest">PuzzleQuest</option>
+            <option value="ObstacleCourse">ObstacleCourse</option>
+        </select>
+    </div>
+
+    <div class="form-group py-2">
+        <label for="ActivityDate">Activity Date:</label>
+        <select name="ActivityDate" id="ActivityDate" class="form-control mt-2 d-block">
+            <option value=""> - Select a ActivityDate - </option>
+            <option value="MondayAfternoon">MondayAfternoon</option>
+            <option value="TuesdayMorning">TuesdayMorning</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-info">Create</button>
+
+    @* show error message if something goes wrong with the input*@
+    @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"]?.ToString()))
+    {
+        <div class="alert alert-danger mt-3">
+            @ViewData["ErrorMessage"];
+        </div>
+    }
+
+</form>
+
+<a href="/Activities/Index">Back to List</a>
+
