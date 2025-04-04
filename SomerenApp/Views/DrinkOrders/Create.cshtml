@@ -1,0 +1,51 @@
+﻿@*@model SomerenApp.ViewModels.DrinkOrderViewModel
+@{
+	ViewData["Title"] = "Order Drink";
+}
+
+<h4>Order Drink</h4>
+<form action="/Drinks/Create" method="POST">
+	<!--Dropdown list students-->
+	<div class="form-group py-2">
+		<label>Student name:</label>
+		<select id="First Name" name="First Name" class="form-control py-2 borderColor">
+			<option value="">Select your first name</option>
+			@foreach (var drink in Model.Students)
+			{
+				<option value="@drink.StudentNumber">@drink.FirstName</option>
+
+			}
+		</select>
+	</div>
+
+	<!--Dropdown list drinks-->
+	<div class="form-group py-2">
+		<label>Drink name:</label>
+		<select id="DrinkName" name="DrinkName" class="form-control py-2 borderColor">
+			<option value="">Select a drink</option>
+			@foreach(var drink in Model.Drinks)
+			{
+				<option value="@drink.DrinkId">@drink.DrinkName - Available: @drink.Stock</option>
+
+			}
+		</select>
+	</div>
+	<!--Amount of drinks (count)-->
+	<div class="form-group py-2">
+		<label for="Amount">Amount</label>
+		<input type="number" id="Amount" name="Amount" min="1" class="form-control borderColor" required/>
+	</div>
+	<!--confirm before adding order-->
+
+	<!--Add-->
+	<button type="submit" class="btn btn-primary my-2">Order</button>
+</form>
+
+<style>
+	.borderColor{
+		border: 1.5px solid #A6B7FD
+	}
+</style>
+
+<a href="/Students/Index">Back to list</a>*@
+
