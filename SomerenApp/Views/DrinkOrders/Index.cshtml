@@ -7,24 +7,21 @@
 	<h1 class="display-4 p-3" style="color: #2A7CB3 ">Drink Menu</h1>
 </div>
 
-@*Tempdata messages from drinkOrdersController*@
-@if (TempData["NullError"] != null)
-{
-	<div class="alert alert-danger">
-		@TempData["NullError"]
-	</div>
+@*TempData messages from drinkOrdersController*@
+@{
+	var succesMessage = TempData["OrderSucces"];
+	var errorMessage = TempData["OrderError"];
 }
-
 @if (TempData["OrderError"] != null)
 {
-	<div class="alert alert-succes">
+	<div class="alert alert-danger">
 		@TempData["OrderError"]
 	</div>
 }
 
 @if (TempData["OrderSucces"] != null)
 {
-	<div class="alert alert-succes">
+	<div class="alert alert-success">
 		@TempData["OrderSucces"]
 	</div>
 }
@@ -36,7 +33,7 @@
 	<div class="form-group py-3">
 		<label for="StudentNumber">Select Student:</label>
 		<select id="StudentNumber" name="StudentNumber" class="form-control borderColor" required>
-			<option value="" disabled selected>~Choose your student~</option>
+			<option value="" disabled selected>~Choose a student~</option>
 			@foreach (var student in Model.Students)
 			{
 				<option value="@student.StudentNumber">@student.FirstName @student.LastName</option>
@@ -47,6 +44,7 @@
 	<div class="form-group py-3">
 		<label for="DrinkId">Select Drink:</label>
 		<select id="DrinkId" name="DrinkId" class="form-control borderColor" required>
+			<option value="" disabled selected>~Choose your drink~</option>
 			@foreach (var student in Model.Drinks)
 			{
 				<option value="@student.DrinkId">@student.DrinkName</option>
@@ -56,7 +54,8 @@
 
 	<div class="form-group py-3">
 		<label for="Count">Amount of drinks:</label>
-		<input type="number" id="Count" name="Count" min="1" class="form-control borderColor" required/>
+
+		<input type="number" id="Count" name="Count" min="1" placeholder="~Choose amount~"class="form-control borderColor" required/>
 	</div>
 
 	<button type="submit" class="btn my-2" style="background-color: #2A7CB3; color: white">Place Order</button>
@@ -65,6 +64,10 @@
 <style>
 	.borderColor {
 		border: 1.5px solid #88AEC7
+	}
+	.alert{
+		width: 50%;
+		margin: 0 auto;
 	}
 	.form{
 		background-color: aliceblue;
@@ -79,10 +82,6 @@
 	.TextOrder{
 		color: #2A7CB3;
 		text-align: center;
-	}
-
-	option[disabled] {
-		color: grey;
 	}
 	selected {
 		color: black;

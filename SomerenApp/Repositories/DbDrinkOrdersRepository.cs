@@ -16,8 +16,8 @@ namespace SomerenApp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"INSERT INTO DrinkOrders (StudentNumber, DrinkId, Count)" +
-                                "VALUES (@StudentId, @DrinkId, @Count);" +
+                string query = $"INSERT INTO orders (StudentNumber, DrinkId, Count)" +
+                                "VALUES (@StudentNumber, @DrinkId, @Count);" +
                                 "SELECT SCOPE_IDENTITY();";
                
                 SqlCommand command = new SqlCommand(query, connection);
@@ -55,7 +55,7 @@ namespace SomerenApp.Repositories
             List<DrinkOrder> orders = new List<DrinkOrder>();
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT StudentNumber, DrinkId, Count FROM DrinkOrders";
+                string query = "SELECT StudentNumber, DrinkId, Count FROM orders";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Connection.Open();
@@ -75,14 +75,14 @@ namespace SomerenApp.Repositories
             }
             return orders;
         }
-
         private Drink ReadDrink(SqlDataReader reader) 
         {
             int drinkId = (int)reader["DrinkId"];
             string drinkName = (string)reader["DrinkName"];
             string drinkType = (string)reader["DrinkType"];
             int stock = (int)reader["Stock"];
-            int btw = (int)reader["Btw"];
+            //int btw = (int)reader["Btw"];
+            int btw = Convert.ToInt32(reader["Btw"]);
 
             return new Drink(drinkId, drinkName, drinkType, stock, btw);
         }
