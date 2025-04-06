@@ -146,11 +146,31 @@ namespace SomerenApp.Repositories
 
         public void RemoveSuperVisor(int activityNumber, int lecturerNumber)
         {
-
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = $"DELETE FROM accompaniments WHERE activityNumber = @ActivityNumber AND lecturerNumber = @LecturerNumber";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@ActivityNumber", activityNumber);
+                command.Parameters.AddWithValue("@LecturerNumber", lecturerNumber);
+                command.Connection.Open();
+                int nrofRowsAffected = command.ExecuteNonQuery();
+                if (nrofRowsAffected == 0)
+                {
+                    throw new Exception("No records updated!");
+                }
+            }
         }
         public void AddSuperVisor(int activityNumber, int lecturerNumber)
         {
-
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = $"INSERT INTO accompaniments (activityNumber, lecturerNumber)" +
+                    "VALUES(@ActivityNumber, @LecturerNumber);";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@ActivityNumber", activityNumber);
+                command.Parameters.AddWithValue("@LecturerNumber", lecturerNumber);
+                command.Connection.Open();
+            }
         }
     }
 }
