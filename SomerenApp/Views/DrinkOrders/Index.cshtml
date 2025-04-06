@@ -1,0 +1,97 @@
+﻿@model SomerenApp.ViewModels.DrinkOrderViewModel;
+@{
+	ViewData["Title"] = "Drinks";
+}
+
+<div class="text-center">
+	<h1 class="display-4 p-3" style="color: #2A7CB3 ">Drink Menu</h1>
+</div>
+
+@*TempData messages from drinkOrdersController*@
+@{
+	var succesMessage = TempData["OrderSucces"];
+	var errorMessage = TempData["OrderError"];
+}
+@if (TempData["OrderError"] != null)
+{
+	<div class="alert alert-danger">
+		@TempData["OrderError"]
+	</div>
+}
+
+@if (TempData["OrderSucces"] != null)
+{
+	<div class="alert alert-success">
+		@TempData["OrderSucces"]
+	</div>
+}
+<!--Menu List-->
+
+<form asp-action="Create" method="POST" class="form">
+	<h3 Class="TextOrder pb-2">Place Your Order</h3>
+
+	<div class="form-group py-3">
+		<label for="StudentNumber">Select Student:</label>
+		<select id="StudentNumber" name="StudentNumber" class="form-control borderColor" required>
+			<option value="" disabled selected>~Choose a student~</option>
+			@foreach (var student in Model.Students)
+			{
+				<option value="@student.StudentNumber">@student.FirstName @student.LastName</option>
+			}
+		</select>
+	</div>
+
+	<div class="form-group py-3">
+		<label for="DrinkId">Select Drink:</label>
+		<select id="DrinkId" name="DrinkId" class="form-control borderColor" required>
+			<option value="" disabled selected>~Choose your drink~</option>
+			@foreach (var student in Model.Drinks)
+			{
+				<option value="@student.DrinkId">@student.DrinkName</option>
+			}
+		</select>
+	</div>
+
+	<div class="form-group py-3">
+		<label for="Count">Amount of drinks:</label>
+
+		<input type="number" id="Count" name="Count" min="1" placeholder="~Choose amount~"class="form-control borderColor" required/>
+	</div>
+
+	<button type="submit" class="btn my-2" style="background-color: #2A7CB3; color: white">Place Order</button>
+</form>
+
+<style>
+	.borderColor {
+		border: 1.5px solid #88AEC7
+	}
+	.alert{
+		width: 50%;
+		margin: 0 auto;
+	}
+	.form{
+		background-color: aliceblue;
+		padding: 40px;
+		width: 50%;
+		margin: 15px auto;
+		border-radius: 5px;
+	}
+	.form-group{
+		margin: 11px;
+	}
+	.TextOrder{
+		color: #2A7CB3;
+		text-align: center;
+	}
+	selected {
+		color: black;
+	}
+	.btn{
+		background-color: #2A7CB3;
+		color: white;
+		margin: 10px;
+	}
+</style>
+
+
+
