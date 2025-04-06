@@ -1,0 +1,114 @@
+﻿@model SomerenApp.Models.ActivityParticipantsViewModel
+
+@{
+    ViewData["Title"] = "Participants";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Partcipants</h1>
+
+    @*Display SuccessMessage after adding or deleting a particpant to/from the selected activity*@
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"];
+        </div>
+    }
+
+
+    @*Dropdown for selecting activities*@
+    <form action="/Participants/Index" method="GET">
+        <div class="form-group mt-3">
+            <label for="ActivityNumber" class="Filter_text" > Select an Activity: </label>
+            <select name="activityNumber" id="activityNumber" class="form-control">
+                <option value=""> - Select an Activity - </option>
+
+                @foreach (var activity in Model.Activities)
+                {
+                   <option value="@activity.ActivityNumber">@activity.ActivityType</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-link mt-3 d-block" style="background-color:#585FD6; color: #FFFFFF;">Filter</button>
+    </form>
+
+
+    <table class="table table-bordered table-hover">
+        <thead style="background-color: #EEEFFB; color:#585FD6;">
+            <tr>
+                <th>Selected Activity</th>
+                <th>Participants</th>
+                <th>Non-participants</th>
+                <th>Actions</th> 
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                @*Participants*@
+                foreach (var participant in Model.Participants)
+                {
+                    Activity? studentActivity = Model.Activities
+                        .FirstOrDefault(a => Model.Participants.Any(p => p.StudentNumber == participant.StudentNumber));
+                    <tr style="background-color: #F9EEE6;">
+                       <td>@Model.Activity?.ActivityType</td>
+                        <td>@participant.FirstName @participant.LastName</td>
+                        <td></td>
+                        <td>
+                            <a asp-action="Delete" asp-route-studentNumber="@participant.StudentNumber" asp-route-activityNumber="@Model?.Activity?.ActivityNumber" class="link">Delete</a>
+                        </td>
+                    </tr>
+                }
+
+                @*NonParticipants*@
+                foreach (var nonParticipant in Model.NonParticipants)
+                {
+                    <tr style="background-color: #F9EEE6;">
+                        <td>@Model?.Activity?.ActivityType</td> @*selected activty*@
+                        <td></td> 
+                        <td>@nonParticipant.FirstName @nonParticipant.LastName</td> @*non-participants*@
+                        <td>
+                            <a asp-action="Create" asp-route-studentNumber="@nonParticipant.StudentNumber" asp-route-activityNumber="@Model?.Activity?.ActivityNumber" class="link">Add</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .Filter_text {
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .form-group {
+        text-align: left;
+    }
+
+    body, a {
+        font-size: 18px;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #F3E0DC;
+    }
+
+    .table, table th, .table td {
+        border-color: #585FD6;
+    }
+
+    a, h1, .Filter_text, label {
+        color: #585FD6;
+    }
+
+    a:hover {
+        color: #000000;
+    }
+
+    button{
+        margin-bottom: 15px;
+    }
+</style>
+
