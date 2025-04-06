@@ -1,0 +1,21 @@
+﻿@model SomerenApp.Models.Lecturer
+@{
+	ViewData["Title"] = "Delete Accompaniment";
+	string? errorMessage = (string)ViewData["ErrorMessage"];
+}
+<h4>@errorMessage</h4>
+<h1>Delete accompaniment</h1>
+<form action="/Lecturers/Delete" method="post">
+	<input hidden type="number" name="LecturerNumber" value="@Model?.LecturerNumber" />
+	<input hidden type="number" name="ActivityNumber" value="" />
+	<div class="form-group py-2">
+		<label for="Lecturer">Lecturer:</label>
+		<input type="text" id="Lecturer" name="Lecturer" class="form-control" readonly value="@Model?.LastName, @Model?.FirstName" />
+	</div>
+	<div class="form-group py-2">
+		<label for="Activity">Activity:</label>
+		<input type="text" id="Activity" name="Activity" class="form-control" readonly value="" />
+	</div>
+	<button type="submit" class="btn btn-primary">Delete</button>
+</form>
+<a href="/Activities/Index">Back to List</a>

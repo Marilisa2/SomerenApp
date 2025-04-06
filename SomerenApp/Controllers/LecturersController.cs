@@ -40,8 +40,6 @@ new Lecturer("Stein", "Clifford", 60, "020 1234567"),
         {
             try
             {
-                /*int roomId = _lecturersRepository.GetAvailableRoomId();
-                lecturer.RoomId = roomId;*/
                 _lecturersRepository.AddLecturer(lecturer);
                 return RedirectToAction("Index");
             }

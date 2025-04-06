@@ -1,0 +1,64 @@
+﻿@model SomerenApp.Models.Accompaniment
+@{
+	ViewData["Title"] = "Accompaniments";
+}
+<div class="text-center">
+	<h1 class="display-4 text-info">Accompaniments</h1>
+	<a href="Activities/Index">Go back to activities</a>
+</div>
+<!--AId = ActivityId and LId = LecturerNumber-->
+<h2>Supervisors</h2>
+<table class="table table-hover">
+	<thead class="table-dark">
+		<tr>
+			<th>Last name</th>
+			<th>First name</th>
+			<th>Age</th>
+			<th>Phone number</th>
+			<th>Remove supervisor</th>
+		</tr>
+	</thead>
+	<tbody class="bg-opacity-10 bg-black">
+		@{
+				foreach (Lecturer lecturer in Model.Supervisors)
+			{
+				<tr>
+					<td>@lecturer.LastName</td>
+					<td>@lecturer.FirstName</td>
+					<td>@lecturer.Age</td>
+					<td>@lecturer.PhoneNumber</td>
+						<td>
+						<a href="/Accompaniments/Delete/?AId=@Model?.Activity.ActivityNumber&LId=@lecturer.LecturerNumber"></a>
+						</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>
+<h2>Nonsupervisors</h2>
+<table class="table table-hover">
+	<thead class="table-dark">
+		<tr>
+			<th>Last name</th>
+			<th>First name</th>
+			<th>Age</th>
+			<th>Phone number</th>
+			<th>Remove supervisor</th>
+		</tr>
+	</thead>
+	<tbody class="bg-opacity-10 bg-black">
+		@{
+			foreach (Lecturer lecturer in Model.NonSupervisors)
+			{
+				<tr>
+					<td>@lecturer.LastName</td>
+					<td>@lecturer.FirstName</td>
+					<td>@lecturer.Age</td>
+					<td>@lecturer.PhoneNumber</td>
+					<td>
+					</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>
