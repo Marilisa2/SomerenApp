@@ -1,53 +1,66 @@
 ﻿@model SomerenApp.Models.Accompaniment
 @{
 	ViewData["Title"] = "Accompaniments";
+	List<Lecturer> supervisors = (List<Lecturer>?)ViewData["supervisors"];
+	List<Lecturer> nonSupervisors = (List<Lecturer>?)ViewData["nonSupervisors"];
 }
 <div class="text-center">
 	<h1 class="display-4 text-info">Accompaniments</h1>
 	<a href="Activities/Index">Go back to activities</a>
 </div>
-<form action="/Lecturers/Accompaniments" method="POST">
-	<table class="table table-hover">
-		<thead class="table-dark">
-			<tr>
-				<th>Last name</th>
-				<th>First name</th>
-				<th>Age</th>
-				<th>Phone number</th>
-				<th>Accompanies this activity</th>
-			</tr>
-		</thead>
-		<tbody class="bg-opacity-10 bg-black">
-			@{
-				foreach (Lecturer lecturer in Model.Supervisors)
-				{
-					<tr>
-						<td>@lecturer.LastName</td>
-						<td>@lecturer.FirstName</td>
-						<td>@lecturer.Age</td>
-						<td>@lecturer.PhoneNumber</td>
+<!--AId = ActivityId and LId = LecturerNumber-->
+<h2>Supervisors</h2>
+<table class="table table-hover">
+	<thead class="table-dark">
+		<tr>
+			<th>Last name</th>
+			<th>First name</th>
+			<th>Age</th>
+			<th>Phone number</th>
+			<th>Remove supervisor</th>
+		</tr>
+	</thead>
+	<tbody class="bg-opacity-10 bg-black">
+		@{
+				foreach (Lecturer lecturer in supervisors)
+			{
+				<tr>
+					<td>@lecturer.LastName</td>
+					<td>@lecturer.FirstName</td>
+					<td>@lecturer.Age</td>
+					<td>@lecturer.PhoneNumber</td>
 						<td>
-							<a href="/Activities/Accompaniments/Add"></a>	
+						<a href="/Activities/Accompaniments/Delete/?AId=@Model?.Activity.ActivityNumber&LId=@lecturer.LecturerNumber"></a>
 						</td>
-					</tr>
-				}
-				foreach (Lecturer lecturer in Model.NonSupervisors)
-				{
-					<tr>
-						<td>@lecturer.LastName</td>
-						<td>@lecturer.FirstName</td>
-						<td>@lecturer.Age</td>
-						<td>@lecturer.PhoneNumber</td>
-						<td>
-							<a href="/Activities/Accompaniments/Add"></a>
-						</td>
-						<td>
-							<a href="/Activities/Accompaniments/Delete"></a>
-						</td>
-					</tr>
-				}
+				</tr>
 			}
-			<input type="submit" value="" />
-		</tbody>
-	</table>
-</form>
+		}
+	</tbody>
+</table>
+<h2>Nonsupervisors</h2>
+<table class="table table-hover">
+	<thead class="table-dark">
+		<tr>
+			<th>Last name</th>
+			<th>First name</th>
+			<th>Age</th>
+			<th>Phone number</th>
+			<th>Remove supervisor</th>
+		</tr>
+	</thead>
+	<tbody class="bg-opacity-10 bg-black">
+		@{
+			foreach (Lecturer lecturer in nonSupervisors)
+			{
+				<tr>
+					<td>@lecturer.LastName</td>
+					<td>@lecturer.FirstName</td>
+					<td>@lecturer.Age</td>
+					<td>@lecturer.PhoneNumber</td>
+					<td>
+					</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>

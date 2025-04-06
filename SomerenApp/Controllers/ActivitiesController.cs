@@ -137,21 +137,35 @@ namespace SomerenApp.Controllers
 
                 Accompaniment accompaniment = new Accompaniment(activity, supervisors, nonSupervisors);
 
-                Dictionary<Lecturer, bool> accompanimentsDictionary;
+                //Dictionary<Lecturer, bool> accompanimentsDictionary;
+                return View(accompaniment); 
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpPost]
+        public ActionResult RemoveAccompaniment(int activityNumber, int lecturerNumber)
+        {
+            try
+            {
+                _lecturersRepository.RemoveSuperVisor(activityNumber, lecturerNumber);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 ViewData["ErrorMessage"] = ex.Message;
-                return View(activityNumber);
+                return View("Index");
             }
         }
         [HttpPost]
-        public ActionResult Accompaniments(int activityNumber, int lecturerNumber)
+        public ActionResult AddAccompaniment(int activityNumber, int lecturerNumber)
         {
             try
             {
-                _lecturersRepository.RemoveSuperVisor(activityNumber, lecturerNumber);
+                _lecturersRepository.AddSuperVisor(activityNumber, lecturerNumber);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
