@@ -121,58 +121,5 @@ namespace SomerenApp.Controllers
                 return View(activity);
             }
         }
-        [HttpGet]
-        public ActionResult Accompaniments(int? activityNumber)
-        {
-            if (activityNumber == null)
-            {
-                return NotFound();
-            }
-            try
-            {
-                Models.Activity activity = _activitiesRepository.GetByID((int)activityNumber);
-
-                List<Lecturer> supervisors = _lecturersRepository.GetSupervisors(activity.ActivityNumber);
-                List<Lecturer> nonSupervisors = _lecturersRepository.GetNonSupervisors(activity.ActivityNumber);
-
-                Accompaniment accompaniment = new Accompaniment(activity, supervisors, nonSupervisors);
-
-                //Dictionary<Lecturer, bool> accompanimentsDictionary;
-                return View(accompaniment); 
-            }
-            catch (Exception ex)
-            {
-                ViewData["ErrorMessage"] = ex.Message;
-                return RedirectToAction("Index");
-            }
-        }
-        [HttpPost]
-        public ActionResult RemoveAccompaniment(int activityNumber, int lecturerNumber)
-        {
-            try
-            {
-                _lecturersRepository.RemoveSuperVisor(activityNumber, lecturerNumber);
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                ViewData["ErrorMessage"] = ex.Message;
-                return View("Index");
-            }
-        }
-        [HttpPost]
-        public ActionResult AddAccompaniment(int activityNumber, int lecturerNumber)
-        {
-            try
-            {
-                _lecturersRepository.AddSuperVisor(activityNumber, lecturerNumber);
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                ViewData["ErrorMessage"] = ex.Message;
-                return View("Index");
-            }
-        }
     }
 }

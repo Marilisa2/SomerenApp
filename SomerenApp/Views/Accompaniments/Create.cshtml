@@ -1,0 +1,19 @@
+﻿@model SomerenApp.Models.Lecturer
+@{
+	ViewData["Title"] = "Create Accompaniment";
+	string? errorMessage = (string)ViewData["ErrorMessage"];
+}
+<h4>@errorMessage</h4>
+<h1>Add Lecturer</h1>
+<form action="/Lecturers/Create" method="post">
+	<div class="form-group py-2">
+		<label for="FirstName">First name:</label>
+		<input type="text" id="FirstName" name="FirstName" class="form-control" required value="" />
+	</div>
+	<div class="form-group py-2">
+		<label for="LastName">Last name:</label>
+		<input type="text" id="LastName" name="LastName" class="form-control" required value="" />
+	</div>
+	<button type="submit" class="btn btn-primary">Add Accompaniment</button>
+</form>
+<a href="/Activities/Index">Back to List</a>
